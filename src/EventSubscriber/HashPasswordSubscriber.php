@@ -7,7 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class HasPasswordSubscriber implements EventSubscriber
+class HashPasswordSubscriber implements EventSubscriber
 {
     private UserPasswordEncoderInterface $passwordEncoder;
 

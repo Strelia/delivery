@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="`user`")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
-class User implements UserInterface
+class User extends Entity implements UserInterface
 {
     const ROLE_USER = 'ROLE_USER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -42,19 +42,29 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 180,
-     *      minMessage = "Your username must be at least {{ limit }} characters long",
-     *      maxMessage = "Your username cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The username should not be blank."),
+        Assert\Length(
+            min: 3,
+            max: 180,
+            minMessage: "Your username must be at least {{ limit }} characters long",
+            maxMessage: "Your username cannot be longer than {{ limit }} characters",
+        )
+    ]
     private $username;
 
     /**
      * @ORM\Column(type="json")
      */
+    #[
+        Assert\NotBlank(message: "The roles should not be blank."),
+        Assert\Choice(
+            choices: User::ROLE_CHOICE,
+            multiple: true,
+            message: "Not valid role"
+        )
+    ]
     private $roles = [];
 
     /**
@@ -65,69 +75,74 @@ class User implements UserInterface
 
     /**
      * @var string|null The hashed password
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 180,
-     *      minMessage = "Your password must be at least {{ limit }} characters long",
-     *      maxMessage = "Your password cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false,
-     *      groups={"set-password"}
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The password should not be blank.", groups: ["set-password"]),
+        Assert\Length(
+            min: 3,
+            max: 180,
+            minMessage: "Your password must be at least {{ limit }} characters long",
+            maxMessage: "Your password cannot be longer than {{ limit }} characters",
+            groups: ["set-password"]
+        )
+    ]
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=180)
-     * @Assert\NotBlank(
-     *     message="The email not empty"
-     * )
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 180,
-     *      minMessage = "Your email must be at least {{ limit }} characters long",
-     *      maxMessage = "Your email cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
-     * )
-     * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email."
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The email should not be blank."),
+        Assert\Email(message: "The email '{{ value }}' is not a valid email."),
+        Assert\Length(
+            min: 3,
+            max: 180,
+            minMessage: "Your email must be at least {{ limit }} characters long",
+            maxMessage: "Your email cannot be longer than {{ limit }} characters",
+        )
+    ]
     private $email;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 50,
-     *      minMessage = "Your first name must be at least {{ limit }} characters long",
-     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The name should not be blank."),
+        Assert\Length(
+            min: 3,
+            max: 50,
+            minMessage: "Your first name must be at least {{ limit }} characters long",
+            maxMessage: "Your first name cannot be longer than {{ limit }} characters",
+        )
+    ]
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
-     * @Assert\Length(
-     *      min = 3,
-     *      max = 50,
-     *      minMessage = "Your last surname must be at least {{ limit }} characters long",
-     *      maxMessage = "Your last surname cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The username should not be blank."),
+        Assert\Length(
+            min: 3,
+            max: 50,
+            minMessage: "Your first name must be at least {{ limit }} characters long",
+            maxMessage: "Your first name cannot be longer than {{ limit }} characters"
+        )
+    ]
     private $surname;
 
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\Length(
-     *      min = 8,
-     *      max = 20,
-     *      minMessage = "Your phone must be at least {{ limit }} characters long",
-     *      maxMessage = "Your phone cannot be longer than {{ limit }} characters",
-     *      allowEmptyString = false
-     * )
      */
+    #[
+        Assert\NotBlank(message: "The phone should not be blank."),
+        Assert\Length (
+            min: 8,
+            max: 20,
+            minMessage: "Your phone must be at least {{ limit }} characters long",
+            maxMessage: "Your phone cannot be longer than {{ limit }} characters",
+        )
+    ]
     private $phone;
 
     /**
@@ -137,10 +152,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Assert\Choice(
-     *     choices="User::STATUS_CHOICE", message=""
-     * )
      */
+    #[Assert\Choice(choices: User::STATUS_CHOICE, message: "Not valid status"), Assert\NotBlank]
     private $status;
 
     public function getId(): ?int
@@ -180,6 +193,16 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function addRole(string $role): self
+    { $role = strtoupper($role);
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
 
         return $this;
     }
