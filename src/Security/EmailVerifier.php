@@ -59,12 +59,14 @@ class EmailVerifier
         /**
          * @var User $user
          */
-        $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+        if ($user->getStatus() === User::STATUS_NEW) {
+            $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
 
-        $user->setStatus(User::STATUS_VERIFIED);
-        $user->setIsVerified(true);
+            $user->setStatus(User::STATUS_VERIFIED);
+            $user->setIsVerified(true);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
     }
 }
