@@ -153,7 +153,7 @@ class User extends Entity implements UserInterface
     private $isVerified = false;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=50)
      */
     #[Assert\Choice(choices: User::STATUS_CHOICE, message: "Not valid status"), Assert\NotBlank]
     private $status;
