@@ -1,0 +1,82 @@
+# NOTE: since the application is originally developed in English, this
+#       "translation" file looks useless because it doesn't really translate
+#       any content. However, this file is essential to use it as the base for
+#       the translations into other languages.
+Dashboard: Dashboard
+# The "main menu" is an example of defining the labels explicitly
+# (they are translated following the 1) method)
+# ------------------------------------------------------------------------------
+menu.admin:        Admins
+menu.admin.list:   List Admin
+menu.user:         User
+menu.user.list:    List User
+menu.business:      Business
+menu.business.list: List business
+
+
+# We let EasyAdmin generate the rest of the backend labels
+# (they are translated following the 2) method)
+# ------------------------------------------------------------------------------
+
+# entity names, labels and titles
+Users: Users
+User: User
+Admins: Admins
+Admin: Admin
+Business: Business
+Businesses: Businesses
+
+# entity properties
+Username: Username
+Roles: Roles
+Password: Password
+Email: Email
+Name: Name
+Surname: Surname
+Phone: Phone
+Status: Status
+Company: Company
+International Name: International Name
+Brand: Brand
+Address: Address
+URL: URL
+Logo: Logo
+Occupations: Occupations
+Agency Type: Agency Type
+
+# Static properties
+ROLE_USER: User
+ROLE_ADMIN: Admin
+STATUS_NEW: New
+STATUS_VERIFIED: Vedified
+STATUS_DELETE: Delete
+STATUS_CONFIRM: Confirm
+STATUS_RESTORED: Restored
+STATUS_REMOVED: Removed
+STATUS_BAN: Ban
+OCCUPATIONS_CARGO_OWNER: Cargo Owner
+OCCUPATIONS_CAR_OWNER: Car Owner
+AGENCY_NATURAL_PERSON: Natural Person
+AGENCY_JURIDICAL_PERSON: Juridical Person
+
+None: None
+files: files
+
+# help messages
+EAN-13 valid code. Leave empty if unknown.: EAN-13 valid code. Leave empty if unknown.
+Reserved for administrators use: Reserved for administrators use
+
+# messages that contain variables
+'Company %entity_label_singular%': 'Company %entity_label_singular%'
+
+# misc. messages
+Account Information: Account Information
+Advanced Settings: Advanced Settings
+Basic information: Basic information
+Contact Information: Contact Information
+Contract file: Contract file
+Delivery Details: Delivery Details
+Legal Information: Legal Information
+Product Details: Product Details
+Purchase Details: Purchase Details
+Transactions History: Transactions History
