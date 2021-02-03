@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -40,7 +41,7 @@ class User extends Entity implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -54,26 +55,26 @@ class User extends Entity implements UserInterface
             maxMessage: "Your username cannot be longer than {{ limit }} characters",
         )
     ]
-    private $username;
+    private string $username;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="jsonb")
      */
     #[
         Assert\NotBlank(message: "The roles should not be blank."),
         Assert\Choice(
-            choices: User::ROLE_CHOICE,
+            choices: self::ROLE_CHOICE,
             multiple: true,
             message: "Not valid role"
         )
     ]
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
      * @var string|null The hashed password
@@ -88,7 +89,7 @@ class User extends Entity implements UserInterface
             groups: ["set-password"]
         )
     ]
-    private $plainPassword;
+    private ?string $plainPassword = null;
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -103,7 +104,7 @@ class User extends Entity implements UserInterface
             maxMessage: "Your email cannot be longer than {{ limit }} characters",
         )
     ]
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -117,7 +118,7 @@ class User extends Entity implements UserInterface
             maxMessage: "Your first name cannot be longer than {{ limit }} characters",
         )
     ]
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -131,7 +132,7 @@ class User extends Entity implements UserInterface
             maxMessage: "Your first name cannot be longer than {{ limit }} characters"
         )
     ]
-    private $surname;
+    private ?string $surname;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -145,18 +146,26 @@ class User extends Entity implements UserInterface
             maxMessage: "Your phone cannot be longer than {{ limit }} characters",
         )
     ]
-    private $phone;
+    private ?string $phone;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    private bool $isVerified = false;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    #[Assert\Choice(choices: User::STATUS_CHOICE, message: "Not valid status"), Assert\NotBlank]
-    private $status;
+    #[
+        Assert\NotBlank (message: ""),
+        Assert\Choice(choices: self::STATUS_CHOICE, message: "Not valid status")
+    ]
+    private ?string $status;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Business::class, inversedBy="staff")
+     */
+    private ?Business $company;
 
     public function getId(): ?int
     {
@@ -183,7 +192,7 @@ class User extends Entity implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    #[Pure] public function getRoles(): array
     {
         $roles = $this->roles;
         return array_unique($roles);
@@ -242,9 +251,9 @@ class User extends Entity implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
     }
 
     /**
@@ -325,5 +334,22 @@ class User extends Entity implements UserInterface
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getCompany(): ?Business
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Business $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    #[Pure] public function __toString(): string
+    {
+        return sprintf('%s (%s %s)', $this->username , $this->surname, $this->name);
     }
 }
