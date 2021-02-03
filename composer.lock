@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6e49eb27fde7cefd988143d602215bc",
+    "content-hash": "203857c3a877072ba198a3e1ae705375",
     "packages": [
+        {
+            "name": "boldtrn/jsonb-bundle",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/boldtrn/JsonbBundle.git",
+                "reference": "bef906f150d3b6a3439c727eabc0fc10a01b33b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/boldtrn/JsonbBundle/zipball/bef906f150d3b6a3439c727eabc0fc10a01b33b2",
+                "reference": "bef906f150d3b6a3439c727eabc0fc10a01b33b2",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.4",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "doctrine/orm": ">2.4,<2.6",
+                "phpunit/phpunit": "~4.2"
+            },
+            "suggest": {
+                "doctrine/orm": "To use DQL functions"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Boldtrn\\JsonbBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Boldt",
+                    "email": "boldtrn@gmail.com"
+                }
+            ],
+            "description": "A library adding the support for JSONB columns of PostgreSQL to Doctrine.",
+            "homepage": "https://github.com/boldtrn/JsonbBundle",
+            "keywords": [
+                "bundle",
+                "doctrine",
+                "jsonb",
+                "postgresql",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/boldtrn/JsonbBundle/issues",
+                "source": "https://github.com/boldtrn/JsonbBundle/tree/v1.2.0"
+            },
+            "time": "2019-10-09T07:05:14+00:00"
+        },
         {
             "name": "composer/package-versions-deprecated",
             "version": "1.11.99.1",
@@ -2493,7 +2549,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v5.2.2",
+            "version": "v5.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
@@ -2542,7 +2598,7 @@
             "description": "Manages URL generation and versioning of web assets such as CSS stylesheets, JavaScript files and image files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/asset/tree/v5.2.2"
+                "source": "https://github.com/symfony/asset/tree/v5.2.3"
             },
             "funding": [
                 {
