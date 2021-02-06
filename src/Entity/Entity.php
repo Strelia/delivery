@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\MappedSuperclass
  * @ORM\HasLifecycleCallbacks
  */
-class Entity
+abstract class Entity
 {
     /**
      * @ORM\Column(type="datetime")

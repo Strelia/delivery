@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BusinessRepository::class)
+ * @ORM\Table (name="businesses")
  * @UniqueEntity(fields={"name"}, message="There is already an account with this username")
  */
 class Business
@@ -174,9 +175,15 @@ class Business
     ]
     private ?string $agencyType;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Cargo::class, mappedBy="owner", orphanRemoval=true)
+     */
+    private $cargo;
+
     #[Pure] public function __construct()
     {
         $this->staff = new ArrayCollection();
+        $this->cargo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -325,5 +332,35 @@ class Business
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Cargo[]
+     */
+    public function getCargo(): Collection
+    {
+        return $this->cargo;
+    }
+
+    public function addCargo(Cargo $cargo): self
+    {
+        if (!$this->cargo->contains($cargo)) {
+            $this->cargo[] = $cargo;
+            $cargo->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCargo(Cargo $cargo): self
+    {
+        if ($this->cargo->removeElement($cargo)) {
+            // set the owning side to null (unless already changed)
+            if ($cargo->getOwner() === $this) {
+                $cargo->setOwner(null);
+            }
+        }
+
+        return $this;
     }
 }
