@@ -6,12 +6,21 @@ Dashboard: Dashboard
 # The "main menu" is an example of defining the labels explicitly
 # (they are translated following the 1) method)
 # ------------------------------------------------------------------------------
-menu.admin:        Admins
-menu.admin.list:   List Admin
-menu.user:         User
-menu.user.list:    List User
-menu.business:      Business
-menu.business.list: List business
+menu:
+  admins:        Admins
+  admin.list:    List Admin
+  users:         Users
+  user.list:     List User
+  businesses:    Businesses
+  business:      Business
+  business.list: List Business
+  kinds:         Kinds
+  adr:           Adr
+  car-body:      Car Body
+  road-train:    Road Train
+  loading:       Loading
+  packaging:     Packaging
+  cargo:         Cargo
 
 
 # We let EasyAdmin generate the rest of the backend labels
@@ -25,6 +34,12 @@ Admins: Admins
 Admin: Admin
 Business: Business
 Businesses: Businesses
+Adr: ADR
+CarBodyKind: Car Body
+RoadTrainKind: Road Train
+LoadingKind: Loading
+PackagingKind: Packaging
+Cargo: Cargo
 
 # entity properties
 Username: Username
@@ -43,6 +58,38 @@ URL: URL
 Logo: Logo
 Occupations: Occupations
 Agency Type: Agency Type
+Parent: Parent
+
+Owner: Owner
+Weight: Weight
+Volume: Volume
+Length: Length
+Width: Width
+Diameter: Diameter
+Count Belt: Count Belt
+Address From: Address From
+Address To: Address To
+Car Bodies: Car Bodies
+
+Has Hitch: Has Hitch
+Has Ruber Tyres: Has Ruber Tyres
+Has Hook: Has Hook
+Is Tir: Is Tir
+Is CMR: Is CMR
+Is T1: Is T1
+Count Cars: Count Cars
+Date Start Min: Date Start Min
+Date Start Max: Date Start Max
+Price: Price
+Payment Kind: Payment Kind
+Is Vat: Is Vat
+Prepayment Kind: Prepayment Kind
+Prepayment: Prepayment
+Is Hidden User Request: Is Hidden User Request
+Loading Kinds: Loading Kinds
+Unloading Kinds: Unloading Kinds
+Packaging Kind: Packaging Kind
+
 
 # Static properties
 ROLE_USER: User
@@ -58,9 +105,17 @@ OCCUPATIONS_CARGO_OWNER: Cargo Owner
 OCCUPATIONS_CAR_OWNER: Car Owner
 AGENCY_NATURAL_PERSON: Natural Person
 AGENCY_JURIDICAL_PERSON: Juridical Person
+PAYMENT_TYPE_FIXED: Fixed Payment
+PAYMENT_TYPE_PER_KILOMETER: Payment Per Kilometer
+STATUS_OPEN: Open
+STATUS_CLOSE: Close
+PREPAYMENT_TYPE_FUEL: Prepayment Fuel
+PREPAYMENT_TYPE_CASH: Prepayment Cash
 
+# Form properties
 None: None
 files: files
+Agree terms: Agree terms
 
 # help messages
 EAN-13 valid code. Leave empty if unknown.: EAN-13 valid code. Leave empty if unknown.
