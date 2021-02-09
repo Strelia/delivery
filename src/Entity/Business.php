@@ -22,14 +22,12 @@ class Business extends Entity
     const STATUS_CHOICE = [
         self::STATUS_NEW,
         self::STATUS_CONFIRM,
-        self::STATUS_RESTORED,
         self::STATUS_REMOVED,
         self::STATUS_BAN,
     ];
 
     const STATUS_NEW = 'STATUS_NEW';
     const STATUS_CONFIRM = 'STATUS_CONFIRM';
-    const STATUS_RESTORED = 'STATUS_RESTORED';
     const STATUS_REMOVED = 'STATUS_REMOVED';
     const STATUS_BAN = 'STATUS_BAN';
 
@@ -124,11 +122,7 @@ class Business extends Entity
      */
     #[
         Assert\Image(
-            maxSize: '10M'
-//            minWidth: 200,
-//            maxWidth: 400,
-//            maxHeight: 400,
-//            minHeight: 200
+            maxSize: '1024k'
         )
     ]
     private ?string $logo = null;

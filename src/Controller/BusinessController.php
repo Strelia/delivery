@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/business', name: 'business_')]
 class BusinessController extends AbstractController
 {
-    #[Route('/', name: 'business_index', methods: ['GET'])]
+    #[Route('/', name: 'index', methods: ['GET'])]
     public function index(BusinessRepository $businessRepository): Response
     {
         return $this->render('business/index.html.twig', [
@@ -21,7 +21,7 @@ class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'business_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Business $business): Response
     {
         return $this->render('business/show.html.twig', [
@@ -29,7 +29,7 @@ class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'business_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Business $business): Response
     {
         $form = $this->createForm(BusinessType::class, $business);
@@ -47,12 +47,13 @@ class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'business_delete', methods: ['DELETE'])]
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, Business $business): Response
     {
         if ($this->isCsrfTokenValid('delete'.$business->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($business);
+            $business->setStatus(Business::STATUS_REMOVED);
+            $entityManager->persist($business);
             $entityManager->flush();
         }
 
