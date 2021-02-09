@@ -48,6 +48,7 @@ class BusinessFixture extends Fixture implements DependentFixtureInterface
         $business->setEmail($faker->email);
         $business->setInternationalName($name);
         $business->setWebURL($faker->url);
+        $business->setAddress("$faker->country $faker->city $faker->streetName, $faker->buildingNumber");
 
         return $business;
     }

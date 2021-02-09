@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Business;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,9 +15,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BusinessRepository extends ServiceEntityRepository
 {
+    public const PAGINATOR_PER_PAGE = 2;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Business::class);
+    }
+
+    public function getPaginator(int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('b')
+            ->orderBy('b.createdAt', 'DESC')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ;
+
+        return new Paginator($query);
     }
 
     // /**

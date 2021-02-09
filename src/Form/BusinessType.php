@@ -6,6 +6,7 @@ use App\Entity\Business;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,21 +17,31 @@ class BusinessType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('internationalName')
-            ->add('brand')
-            ->add('address')
-            ->add('webURL', UrlType::class)
+            ->add('internationalName', TextType::class, [
+                'label' => 'International Name',
+                'required' => false,
+            ])
+            ->add('brand', TextType::class, [
+                'required' => false,
+            ])
+            ->add('address', TextType::class, [
+                'required' => false,
+            ])
+            ->add('webURL', UrlType::class, [
+                'label' => 'URL',
+                'required' => false,
+            ])
             ->add('logo', FileType::class, [
                 'mapped' => false,
+                'required' => false,
             ])
             ->add('occupations', ChoiceType::class, [
                 'choices' => array_combine(Business::OCCUPATIONS_CHOICE, Business::OCCUPATIONS_CHOICE),
-                'required' => true,
-                'multiple' => true
+                'multiple' => true,
             ])
             ->add('agencyType', ChoiceType::class, [
+                'label' => 'Agency Type',
                 'choices' => array_combine(Business::AGENCY_TYPE_CHOICE, Business::AGENCY_TYPE_CHOICE),
-                'require' => true
             ])
         ;
     }

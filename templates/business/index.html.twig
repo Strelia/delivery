@@ -8,36 +8,38 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>InternationalName</th>
-                <th>Brand</th>
-                <th>Address</th>
-                <th>WebURL</th>
-                <th>Logo</th>
-                <th>Status</th>
-                <th>Occupations</th>
-                <th>AgencyType</th>
-                <th>actions</th>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}International Name{% endtrans %}</th>
+                <th>{% trans %}Brand{% endtrans %}</th>
+                <th>{% trans %}Address{% endtrans %}</th>
+                <th>{% trans %}URL{% endtrans %}</th>
+                <th>{% trans %}Logo{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <th>{% trans %}Occupations{% endtrans %}</th>
+                <th>{% trans %}Agency Type{% endtrans %}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for business in businesses %}
             <tr>
-                <td>{{ business.id }}</td>
                 <td>{{ business.name }}</td>
                 <td>{{ business.internationalName }}</td>
                 <td>{{ business.brand }}</td>
                 <td>{{ business.address }}</td>
                 <td>{{ business.webURL }}</td>
-                <td>{{ business.logo }}</td>
-                <td>{{ business.status }}</td>
+                <td>
+                    {% if business.logo %}
+                        <img src="{{ asset(business.logo) }}">
+                    {% endif %}
+                </td>
+                <td>{{ business.status|trans|raw }}</td>
                 <td>
                     {% for occupation in business.occupations %}
-                        {{ occupation }}
+                        {{ occupation|trans|raw }}
                     {% endfor %}
                 </td>
-                <td>{{ business.agencyType }}</td>
+                <td>{{ business.agencyType|trans|raw }}</td>
                 <td>
                     <a href="{{ path('business_show', {'id': business.id}) }}">show</a>
                     <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
@@ -50,4 +52,11 @@
         {% endfor %}
         </tbody>
     </table>
+    <div>{{ 'nb_of_business'|trans({count: businesses|length}) }}</div>
+    {% if previous >= 0 %}
+        <a href="{{ path('business_index', {offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < businesses|length %}
+        <a href="{{ path('business_index', { offset: next }) }}">Next</a>
+    {% endif %}
 {% endblock %}
