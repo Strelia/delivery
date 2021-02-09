@@ -127,7 +127,7 @@ class Cargo extends Entity
     /**
      * @ORM\ManyToMany(targetEntity=CarBodyKind::class)
      */
-    private ArrayCollection $carBodies;
+    private ArrayCollection|PersistentCollection $carBodies;
 
     /**
      * @ORM\Column(type="boolean")
@@ -293,6 +293,15 @@ class Cargo extends Entity
         $this->carBodies = new ArrayCollection();
         $this->loadingKinds = new ArrayCollection();
         $this->unloadingKinds = new ArrayCollection();
+
+        $this->hasHitch = false;
+        $this->hasRuberTyres = false;
+        $this->hasHook = false;
+        $this->isTir = false;
+        $this->isCMR = false;
+        $this->isT1 = false;
+        $this->isVat = false;
+        $this->isHiddenUserRequest = false;
     }
 
     public function getId(): ?int

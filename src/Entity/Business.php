@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table (name="businesses")
  * @UniqueEntity(fields={"name"}, message="There is already an account with this username")
  */
-class Business
+class Business extends Entity
 {
 
     const STATUS_CHOICE = [
@@ -178,7 +178,22 @@ class Business
     /**
      * @ORM\OneToMany(targetEntity=Cargo::class, mappedBy="owner", orphanRemoval=true)
      */
-    private $cargo;
+    private ArrayCollection|PersistentCollection $cargo;
+
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    #[
+        Assert\NotBlank(message: "The email should not be blank."),
+        Assert\Email(message: "The email '{{ value }}' is not a valid email."),
+        Assert\Length(
+            min: 3,
+            max: 180,
+            minMessage: "Your email must be at least {{ limit }} characters long",
+            maxMessage: "Your email cannot be longer than {{ limit }} characters",
+        )
+    ]
+    private ?string $email;
 
     #[Pure] public function __construct()
     {
@@ -360,6 +375,18 @@ class Business
                 $cargo->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
