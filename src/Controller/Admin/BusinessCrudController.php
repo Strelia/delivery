@@ -4,19 +4,14 @@ namespace App\Controller\Admin;
 
 use App\Admin\Filter\ChoiceJSONBFilter;
 use App\Entity\Business;
-use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use JetBrains\PhpStorm\Pure;
 
 class BusinessCrudController extends AbstractCrudController
@@ -67,7 +62,8 @@ class BusinessCrudController extends AbstractCrudController
         yield TextField::new('address')->setRequired(true);
         yield UrlField::new('webURL', 'URL');
         yield ImageField::new('logo')
-            ->setUploadDir('public/uploads');
+            ->setUploadDir('public/images/')
+        ;
         yield ChoiceField::new('status')->setChoices($this->statusChoice);
         yield ChoiceField::new('occupations')->setRequired(true)
             ->allowMultipleChoices()->setChoices($this->occupationsChoice);

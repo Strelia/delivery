@@ -167,6 +167,15 @@ class User extends Entity implements UserInterface
      */
     private ?Business $company;
 
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->addRole(self::ROLE_USER);
+        $this->setStatus(self::STATUS_NEW);
+    }
+
     public function getId(): ?int
     {
         return $this->id;
