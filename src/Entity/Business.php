@@ -72,6 +72,7 @@ class Business extends Entity
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     #[
+        Assert\NotBlank(allowNull: true),
         Assert\Length(
             min: 3,
             max: 255,
@@ -85,6 +86,7 @@ class Business extends Entity
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     #[
+        Assert\NotBlank(allowNull: true),
         Assert\Length(
             min: 3,
             max: 150,
@@ -111,6 +113,7 @@ class Business extends Entity
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     #[
+        Assert\NotBlank(allowNull: true),
         Assert\Url (
             message: "The url \"{{ value }}\" is not a valid url",
         )
@@ -121,11 +124,12 @@ class Business extends Entity
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     #[
+//        Assert\NotBlank(allowNull: true),
         Assert\Image(
             maxSize: '1024k'
         )
     ]
-    private ?string $logo = null;
+    private ?string $logo;
 
     /**
      * @ORM\Column(type="string", length=50)
