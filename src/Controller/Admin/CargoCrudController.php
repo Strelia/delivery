@@ -21,7 +21,7 @@ class CargoCrudController extends AbstractCrudController
     /**
      * CargoCrudController constructor.
      */
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->statusChoice = array_combine(Cargo::STATUS_CHOICE, Cargo::STATUS_CHOICE);
         $this->prepaymentType = array_combine(Cargo::PREPAYMENT_TYPE_CHOICE, Cargo::PREPAYMENT_TYPE_CHOICE);

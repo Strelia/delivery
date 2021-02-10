@@ -36,7 +36,7 @@ class UserCrudController extends AbstractCrudController
     /**
      * UserCrudController constructor.
      */
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->status = array_combine(User::STATUS_CHOICE, User::STATUS_CHOICE);
     }

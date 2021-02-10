@@ -25,7 +25,7 @@ class PackagingKind extends EntityKind
      */
     private ArrayCollection|PersistentCollection $packagingKinds;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->packagingKinds = new ArrayCollection();
     }

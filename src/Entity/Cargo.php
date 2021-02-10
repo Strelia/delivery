@@ -288,7 +288,7 @@ class Cargo extends Entity
      */
     private ?PackagingKind $packagingKind;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->carBodies = new ArrayCollection();
         $this->loadingKinds = new ArrayCollection();

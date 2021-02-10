@@ -201,7 +201,7 @@ class User extends Entity implements UserInterface
     /**
      * @see UserInterface
      */
-    #[Pure] public function getRoles(): array
+    public function getRoles(): array
     {
         $roles = $this->roles;
         return array_unique($roles);
@@ -357,7 +357,7 @@ class User extends Entity implements UserInterface
         return $this;
     }
 
-    #[Pure] public function __toString(): string
+    public function __toString(): string
     {
         return sprintf('%s (%s %s)', $this->username , $this->surname, $this->name);
     }
