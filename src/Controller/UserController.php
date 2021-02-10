@@ -39,7 +39,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            'businessId' => $this->getUser()?->getCompany()->getId() || 0
+            'businessId' => $this->getUser()?->getCompany()->getId() ?? 0
         ]);
     }
 
