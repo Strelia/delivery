@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Business;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -17,6 +20,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    const PAGINATOR_PER_PAGE = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -34,6 +39,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newEncodedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function getQueryBuildUserByBusiness(Business $business, int $offset): QueryBuilder
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.company = :company')
+            ->setParameter('company', $business)
+            ->orderBy('u.createdAt', 'DESC')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset);
+    }
+
+    public function getPaginator(QueryBuilder $query): Paginator
+    {
+        $query
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ;
+
+        return new Paginator($query->getQuery());
     }
 
     // /**

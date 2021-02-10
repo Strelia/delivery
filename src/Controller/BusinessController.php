@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Business;
 use App\Form\BusinessType;
 use App\Repository\BusinessRepository;
+use App\Repository\UserRepository;
 use App\Security\Voter\BusinessVoter;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,19 @@ class BusinessController extends AbstractController
         $paginator = $businessRepository->getPaginator($offset);
         return $this->render('business/index.html.twig', [
             'businesses' => $paginator,
+            'previous' => $offset - BusinessRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + BusinessRepository::PAGINATOR_PER_PAGE),
+        ]);
+    }
+
+    #[Route('/{id}', name: 'staff', methods: ['GET'])]
+    public function staff(Request $request, UserRepository $userRepository, Business $business): Response
+    {
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $userRepository->getPaginator($userRepository->getQueryBuildUserByBusiness($business, $offset));
+        return $this->render('user/index.html.twig', [
+            'businessId' => $business->getId(),
+            'users' => $paginator,
             'previous' => $offset - BusinessRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + BusinessRepository::PAGINATOR_PER_PAGE),
         ]);
