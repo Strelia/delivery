@@ -42,7 +42,9 @@
                 <td>{{ business.agencyType|trans|raw }}</td>
                 <td>
                     <a href="{{ path('business_show', {'id': business.id}) }}">show</a>
-                    <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
+                    {% if app.user.company.id == business.id %}
+                        <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Business;
 use App\Form\BusinessType;
 use App\Repository\BusinessRepository;
+use App\Security\Voter\BusinessVoter;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +38,7 @@ class BusinessController extends AbstractController
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Business $business, FileUploader $fileUploader): Response
     {
+        $this->denyAccessUnlessGranted(BusinessVoter::EDIT, $business);
         $form = $this->createForm(BusinessType::class, $business);
         $form->handleRequest($request);
 

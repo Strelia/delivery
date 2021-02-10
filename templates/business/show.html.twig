@@ -60,10 +60,13 @@
 
     <a href="{{ path('business_index') }}">back to list</a>
 
-    <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
+    {% if app.user.company.id == business.id %}
+        <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
+    {% endif %}
 
     {{ include('business/_delete_form.html.twig') }}
 
+    {% if app.user.company.id == business.id %}
     <a href="{{ path('user_new', {'businessId': business.id}) }}">Create new</a>
     <table class="table">
         <thead>
@@ -89,4 +92,5 @@
         {% endfor %}
         </tbody>
     </table>
+    {% endif %}
 {% endblock %}
