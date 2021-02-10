@@ -3,10 +3,9 @@
 #       any content. However, this file is essential to use it as the base for
 #       the translations into other languages.
 Dashboard: Dashboard
-# The "main menu" is an example of defining the labels explicitly
-# (they are translated following the 1) method)
+# The menu Admin
 # ------------------------------------------------------------------------------
-menu:
+menu.admin:
   admins:        Admins
   admin.list:    List Admin
   users:         Users

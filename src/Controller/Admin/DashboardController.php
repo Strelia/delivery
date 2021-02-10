@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Admin;
 use App\Entity\Adr;
 use App\Entity\Business;
 use App\Entity\CarBodyKind;
@@ -12,7 +11,6 @@ use App\Entity\PackagingKind;
 use App\Entity\RoadTrainKind;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Menu\SubMenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,17 +62,17 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('menu.admins', 'fa fa-user-shield', User::class)
+        yield MenuItem::linkToCrud('menu.admin.admins', 'fa fa-user-shield', User::class)
             ->setController(AdminCrudController::class);
-        yield MenuItem::linkToCrud('menu.users', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('menu.businesses', 'fas fa-business-time', Business::class);
-        yield MenuItem::subMenu('menu.kinds', 'fas fa-layer-group')->setSubItems([
-            MenuItem::linkToCrud('menu.adr', 'fas fa-radiation', Adr::class),
-            MenuItem::linkToCrud('menu.car-body', 'fas fa-car', CarBodyKind::class),
-            MenuItem::linkToCrud('menu.road-train', 'fas fa-trailer', RoadTrainKind::class),
-            MenuItem::linkToCrud('menu.loading', 'fas fa-truck-loading', LoadingKind::class),
-            MenuItem::linkToCrud('menu.packaging', 'fas fa-box', PackagingKind::class),
+        yield MenuItem::linkToCrud('menu.admin.users', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('menu.admin.businesses', 'fas fa-business-time', Business::class);
+        yield MenuItem::subMenu('menu.admin.kinds', 'fas fa-layer-group')->setSubItems([
+            MenuItem::linkToCrud('menu.admin.adr', 'fas fa-radiation', Adr::class),
+            MenuItem::linkToCrud('menu.admin.car-body', 'fas fa-car', CarBodyKind::class),
+            MenuItem::linkToCrud('menu.admin.road-train', 'fas fa-trailer', RoadTrainKind::class),
+            MenuItem::linkToCrud('menu.admin.loading', 'fas fa-truck-loading', LoadingKind::class),
+            MenuItem::linkToCrud('menu.admin.packaging', 'fas fa-box', PackagingKind::class),
         ]);
-        yield MenuItem::linkToCrud('menu.cargo', 'fas fa-boxes', Cargo::class);
+        yield MenuItem::linkToCrud('menu.admin.cargo', 'fas fa-boxes', Cargo::class);
     }
 }
