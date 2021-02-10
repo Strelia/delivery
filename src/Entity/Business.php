@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -123,13 +122,7 @@ class Business extends Entity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    #[
-//        Assert\NotBlank(allowNull: true),
-        Assert\Image(
-            maxSize: '1024k'
-        )
-    ]
-    private ?string $logo;
+    private ?string $logo = null;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -193,7 +186,7 @@ class Business extends Entity
     ]
     private ?string $email;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->staff = new ArrayCollection();
         $this->cargo = new ArrayCollection();
@@ -269,7 +262,7 @@ class Business extends Entity
         return $this->logo;
     }
 
-    public function setLogo(string $logo): self
+    public function setLogo(?string $logo): self
     {
         $this->logo = $logo;
 

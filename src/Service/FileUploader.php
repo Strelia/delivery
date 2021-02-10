@@ -15,7 +15,7 @@ class FileUploader
         $this->targetDirectory = $targetDirectory;
     }
 
-    public function upload($prefix, UploadedFile $file, ?string $oldFile = null)
+    public function upload($prefix, UploadedFile $file)
     {
 //        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
 //        $safeFilename = $originalFilename;
@@ -35,7 +35,7 @@ class FileUploader
         } while (file_exists($fullPath . $dir . DIRECTORY_SEPARATOR. $fileName));
         $file->move($fullPath . $dir, $fileName);
 
-        return $prefix . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $fileName;
+        return $dir . DIRECTORY_SEPARATOR . $fileName;
     }
 
     protected function getTargetDirectory(): string

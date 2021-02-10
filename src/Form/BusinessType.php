@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class BusinessType extends AbstractType
 {
@@ -34,6 +35,9 @@ class BusinessType extends AbstractType
             ->add('logo', FileType::class, [
                 'mapped' => false,
                 'required' => false,
+                'constraints' => [
+                    new Image(['maxSize' => '1024k'])
+                ],
             ])
             ->add('occupations', ChoiceType::class, [
                 'choices' => array_combine(Business::OCCUPATIONS_CHOICE, Business::OCCUPATIONS_CHOICE),

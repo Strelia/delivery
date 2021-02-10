@@ -30,7 +30,7 @@
                 <td>{{ business.webURL }}</td>
                 <td>
                     {% if business.logo %}
-                        <img src="{{ asset(business.logo) }}">
+                        <img alt="{{ business.name }}" src="{{ asset('images/' ~ business.logo) }}">
                     {% endif %}
                 </td>
                 <td>{{ business.status|trans|raw }}</td>

@@ -12,7 +12,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
-use JetBrains\PhpStorm\Pure;
 
 class BusinessCrudController extends AbstractCrudController
 {
@@ -23,7 +22,7 @@ class BusinessCrudController extends AbstractCrudController
     /**
      * BusinessCrudController constructor.
      */
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->statusChoice = array_combine(Business::STATUS_CHOICE, Business::STATUS_CHOICE);
         $this->occupationsChoice = array_combine(Business::OCCUPATIONS_CHOICE,Business::OCCUPATIONS_CHOICE);
@@ -62,7 +61,8 @@ class BusinessCrudController extends AbstractCrudController
         yield TextField::new('address')->setRequired(true);
         yield UrlField::new('webURL', 'URL');
         yield ImageField::new('logo')
-            ->setUploadDir('public/images/')
+            ->setBasePath('images/')
+            ->setUploadDir('public/images')
         ;
         yield ChoiceField::new('status')->setChoices($this->statusChoice);
         yield ChoiceField::new('occupations')->setRequired(true)
@@ -77,5 +77,4 @@ class BusinessCrudController extends AbstractCrudController
             ->setEntityLabelInPlural('Businesses')
             ->setSearchFields(['id', 'name', 'internationalName', 'address', 'webURL']);
     }
-
 }

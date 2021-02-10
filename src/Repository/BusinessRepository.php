@@ -15,7 +15,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class BusinessRepository extends ServiceEntityRepository
 {
-    public const PAGINATOR_PER_PAGE = 2;
+    public const PAGINATOR_PER_PAGE = 20;
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Business::class);
