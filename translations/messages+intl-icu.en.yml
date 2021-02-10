@@ -21,6 +21,17 @@ menu.admin:
   packaging:     Packaging
   cargo:         Cargo
 
+# The menu Client
+# ------------------------------------------------------------------------------
+menu.client:
+  home: Home
+  company.list: Companies
+  company: Company
+  staff: Staff
+  profile: Profile
+  company.cargo: My Cargo
+  cargo.list: Cargo
+
 
 # We let EasyAdmin generate the rest of the backend labels
 # (they are translated following the 2) method)
@@ -42,6 +53,7 @@ Cargo: Cargo
 
 # entity properties
 Created At: Created At
+Updated At: Updated At
 Username: Username
 Roles: Roles
 Password: Password
