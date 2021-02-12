@@ -31,6 +31,9 @@ menu.client:
   profile: Profile
   company.cargo: My Cargo
   cargo.list: Cargo
+  login: Login
+  register: Register
+  logout: Logout
 
 
 # We let EasyAdmin generate the rest of the backend labels

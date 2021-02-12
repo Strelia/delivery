@@ -2,6 +2,7 @@
 <header>
     <nav>
         <ul>
+            {% if app.user %}
             <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.home {% endtrans %}</a></li>
             <li class="{{ menu_item_class }}"><a href="{{ path('business_index')}}">{% trans %} menu.client.company.list {% endtrans %}</a></li>
             <li class="{{ menu_item_class }}"><a href="{{ path('business_show', {'id': app.user.company.id})}}">{% trans %} menu.client.company {% endtrans %}</a></li>
@@ -9,6 +10,11 @@
             <li class="{{ menu_item_class }}"><a href="{{ path('user_show', {'id': app.user.id})}}">{% trans %} menu.client.profile {% endtrans %}</a></li>
             <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.company.cargo {% endtrans %}</a></li>
             <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.cargo.list {% endtrans %}</a></li>
+            <li class="{{ menu_item_class }}"><a href="{{ path('app_logout')}}">{% trans %} menu.client.logout {% endtrans %}</a></li>
+            {% else %}
+            <li class="{{ menu_item_class }}"><a href="{{ path('app_login')}}">{% trans %} menu.client.login {% endtrans %}</a></li>
+            <li class="{{ menu_item_class }}"><a href="{{ path('app_register')}}">{% trans %} menu.client.register {% endtrans %}</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
