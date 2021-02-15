@@ -6,34 +6,30 @@
     <h1>Business index</h1>
 
     <table class="table">
-        <thead>
+        <thead class="thead-dark">
             <tr>
-                <th>{% trans %}Name{% endtrans %}</th>
-                <th>{% trans %}International Name{% endtrans %}</th>
-                <th>{% trans %}Brand{% endtrans %}</th>
-                <th>{% trans %}Address{% endtrans %}</th>
-                <th>{% trans %}URL{% endtrans %}</th>
-                <th>{% trans %}Logo{% endtrans %}</th>
-                <th>{% trans %}Status{% endtrans %}</th>
-                <th>{% trans %}Occupations{% endtrans %}</th>
-                <th>{% trans %}Agency Type{% endtrans %}</th>
-                <th></th>
+                <th class="align-text-top">{% trans %}Name{% endtrans %}</th>
+                <th class="align-text-top">{% trans %}International Name{% endtrans %}</th>
+                <th class="align-text-top">{% trans %}Brand{% endtrans %}</th>
+                <th class="align-text-top">{% trans %}Logo{% endtrans %}</th>
+                <th class="align-text-top">{% trans %}Occupations{% endtrans %}</th>
+                <th class="align-text-top">{% trans %}Agency Type{% endtrans %}</th>
+                <th class="actions"></th>
             </tr>
         </thead>
         <tbody>
         {% for business in businesses %}
-            <tr>
+            <tr class="{{ business.status == 'STATUS_NEW' ? 'table-success' : '' }}"
+                title="{% trans %}Status{% endtrans %}: {{ business.status|trans|raw }}"
+            >
                 <td>{{ business.name }}</td>
                 <td>{{ business.internationalName }}</td>
                 <td>{{ business.brand }}</td>
-                <td>{{ business.address }}</td>
-                <td>{{ business.webURL }}</td>
                 <td>
                     {% if business.logo %}
-                        <img alt="{{ business.name }}" src="{{ asset('images/' ~ business.logo) }}">
+                        <img alt="{{ business.name }}" class="img-fluid" src="{{ asset('images/' ~ business.logo) }}">
                     {% endif %}
                 </td>
-                <td>{{ business.status|trans|raw }}</td>
                 <td>
                     {% for occupation in business.occupations %}
                         {{ occupation|trans|raw }}
@@ -41,9 +37,13 @@
                 </td>
                 <td>{{ business.agencyType|trans|raw }}</td>
                 <td>
-                    <a href="{{ path('business_show', {'id': business.id}) }}">show</a>
+                    <a class="btn btn-primary btn-sm" href="{{ path('business_show', {'id': business.id}) }}" title="{% trans %}Show{% endtrans %}">
+                        <i class="fas fa-eye"></i>
+                    </a>
                     {% if app.user.company.id == business.id %}
-                        <a href="{{ path('business_edit', {'id': business.id}) }}">edit</a>
+                        <a class="btn btn-success btn-sm" href="{{ path('business_edit', {'id': business.id}) }}" title="{% trans %}Edit{% endtrans %}">
+                            <i class="fas fa-edit"></i>
+                        </a>
                     {% endif %}
                 </td>
             </tr>

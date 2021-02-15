@@ -146,6 +146,25 @@ nb_of_business: >-
       other {There are # businesses}
   }
 
+Please sign in: Please sign in
+Remember me: Remember me
+Forgot password: Forgot password
+Reset password: Reset password
+
+New password: New password
+Repeat Password: Repeat Password
+Reset your password: Reset your password
+
+# Layout
+Show: Show
+Staff: Staff
+Add New Employee: Add New Employee
+
+# /check-email
+An email has been sent that contains a link that you can click to reset your password. This link will expire in: An email has been sent that contains a link that you can click to reset your password. This link will expire in
+If you don't receive an email please check your spam folder or: If you don't receive an email please check your spam folder or
+try again: try again
+
 # help messages
 EAN-13 valid code. Leave empty if unknown.: EAN-13 valid code. Leave empty if unknown.
 Reserved for administrators use: Reserved for administrators use

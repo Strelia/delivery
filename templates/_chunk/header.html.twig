@@ -1,20 +1,83 @@
 {% set menu_item_class = '' %}
 <header>
-    <nav>
-        <ul>
-            {% if app.user %}
-            <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.home {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('business_index')}}">{% trans %} menu.client.company.list {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('business_show', {'id': app.user.company.id})}}">{% trans %} menu.client.company {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('business_staff', {'id': app.user.company.id})}}">{% trans %} menu.client.staff {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('user_show', {'id': app.user.id})}}">{% trans %} menu.client.profile {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.company.cargo {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('dashboard')}}">{% trans %} menu.client.cargo.list {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('app_logout')}}">{% trans %} menu.client.logout {% endtrans %}</a></li>
-            {% else %}
-            <li class="{{ menu_item_class }}"><a href="{{ path('app_login')}}">{% trans %} menu.client.login {% endtrans %}</a></li>
-            <li class="{{ menu_item_class }}"><a href="{{ path('app_register')}}">{% trans %} menu.client.register {% endtrans %}</a></li>
-            {% endif %}
-        </ul>
-    </nav>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a href="{{ path('dashboard') }}" class="navbar-brand">
+                <img src="{{ asset('logo.svg') }}" alt="logo" width="30" height="24" class="d-inline-block align-top">
+            </a>
+
+            <button class="navbar-toggler burger collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('dashboard') }}">
+                            {% trans %} menu.client.home {% endtrans %}
+                        </a>
+                    </li>
+                    {% if app.user %}
+                    <li class="nav-item dropdown dropdown-hover">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {% trans %} menu.client.company {% endtrans %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown-3">
+                            <a class="nav-link" href="{{ path('business_show', {'id': app.user.company.id}) }}">
+                                {% trans %} menu.client.company {% endtrans %}
+                            </a>
+                            <a class="nav-link" href="{{ path('dashboard') }}">
+                                {% trans %} menu.client.company.cargo {% endtrans %}
+                            </a>
+                            <a class="nav-link" href="{{ path('business_staff', {'id': app.user.company.id}) }}">
+                                {% trans %} menu.client.staff {% endtrans %}
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('dashboard') }}">
+                            {% trans %} menu.client.cargo.list {% endtrans %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('business_index') }}">
+                            {% trans %} menu.client.company.list {% endtrans %}
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item dropdown dropdown-hover">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-0" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% trans %}menu.client.profile{% endtrans %}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown-0">
+                            {% if app.user %}
+                                <a class="dropdown-item" href="{{ path('user_show', {'id': app.user.id}) }}">
+                                    {% trans %}menu.client.profile{% endtrans %}
+                                </a>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                    {% trans %}menu.client.logout{% endtrans %}
+                                </a>
+                            {% else %}
+                                <a class="dropdown-item" href="{{ path('app_login') }}">
+                                    {% trans %}menu.client.login{% endtrans %}
+                                </a>
+                                <a class="dropdown-item" href="{{ path('app_register') }}">
+                                    {% trans %}menu.client.register{% endtrans %}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
 </header>
