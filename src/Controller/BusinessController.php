@@ -28,7 +28,7 @@ class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'staff', methods: ['GET'])]
+    #[Route('/{id}/users', name: 'staff', methods: ['GET'])]
     public function staff(Request $request, UserRepository $userRepository, Business $business): Response
     {
         $offset = max(0, $request->query->getInt('offset', 0));
