@@ -20,6 +20,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
             anonymous: true
             pattern: ^/
             lazy: true
@@ -44,6 +48,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/reset-password, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
 #         - { path: ^/register, roles: IS_AUTHENTICATED_FULLY }
 #         - { path: ^/login, roles: IS_AUTHENTICATED_FULLY }
