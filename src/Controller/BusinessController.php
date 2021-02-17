@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Business;
 use App\Form\BusinessType;
 use App\Repository\BusinessRepository;
+use App\Repository\CargoRepository;
 use App\Repository\UserRepository;
 use App\Security\Voter\BusinessVoter;
 use App\Service\FileUploader;
@@ -28,14 +29,29 @@ class BusinessController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/users', name: 'staff', methods: ['GET'])]
+    #[Route('/{id}/staff', name: 'staff', methods: ['GET'])]
     public function staff(Request $request, UserRepository $userRepository, Business $business): Response
     {
+        $this->denyAccessUnlessGranted(BusinessVoter::EDIT, $business);
+
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $userRepository->getPaginator($userRepository->getQueryBuildUserByBusiness($business, $offset));
         return $this->render('user/index.html.twig', [
-            'businessId' => $business->getId(),
             'users' => $paginator,
+            'previous' => $offset - BusinessRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + BusinessRepository::PAGINATOR_PER_PAGE),
+        ]);
+    }
+
+    #[Route ('/{id}/cargo', name: 'cargo', methods: ['GET'])]
+    #[Route ('/{id}/cargo/{hash}', name: 'cargo_search', methods: ['GET'])]
+    public function cargo(Request $request, Business $business, CargoRepository $cargoRepository,
+                          string $hash = ''): Response
+    {
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $cargoRepository->getPaginator($cargoRepository->getQueryBuildCargoByBusiness($business, $offset));
+        return $this->render('cargo/own-cargo.html.twig', [
+            'cargos' => $paginator,
             'previous' => $offset - BusinessRepository::PAGINATOR_PER_PAGE,
             'next' => min(count($paginator), $offset + BusinessRepository::PAGINATOR_PER_PAGE),
         ]);

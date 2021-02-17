@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cargo index{% endblock %}
+
+{% block body %}
+    <h1>Cargo index</h1>
+    <a href="{{ path('cargo_new') }}">Create new</a>
+    {% if cargos|length > 0 %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Weight</th>
+            <th>Volume</th>
+            <th>Length</th>
+            <th>Width</th>
+            <th>Diameter</th>
+            <th>CountBelt</th>
+            <th>AddressFrom</th>
+            <th>AddressTo</th>
+            <th>HasHitch</th>
+            <th>HasRuberTyres</th>
+            <th>HasHook</th>
+            <th>IsTir</th>
+            <th>IsCMR</th>
+            <th>IsT1</th>
+            <th>CountCars</th>
+            <th>DateStartMin</th>
+            <th>DateStartMax</th>
+            <th>Price</th>
+            <th>PaymentKind</th>
+            <th>IsVat</th>
+            <th>PrepaymentKind</th>
+            <th>Prepayment</th>
+            <th>IsHiddenUserRequest</th>
+            <th>Status</th>
+            <th>CreatedAt</th>
+            <th>UpdatedAt</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for cargo in cargos %}
+            <tr>
+                <td>{{ cargo.name }}</td>
+                <td>{{ cargo.weight }}</td>
+                <td>{{ cargo.volume }}</td>
+                <td>{{ cargo.length }}</td>
+                <td>{{ cargo.width }}</td>
+                <td>{{ cargo.diameter }}</td>
+                <td>{{ cargo.countBelt }}</td>
+                <td>{{ cargo.addressFrom }}</td>
+                <td>{{ cargo.addressTo }}</td>
+                <td>{{ cargo.hasHitch ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.hasRuberTyres ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.hasHook ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.isTir ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.isCMR ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.isT1 ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.countCars }}</td>
+                <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.price }}</td>
+                <td>{{ cargo.paymentKind }}</td>
+                <td>{{ cargo.isVat ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.prepaymentKind }}</td>
+                <td>{{ cargo.prepayment }}</td>
+                <td>{{ cargo.isHiddenUserRequest ? 'Yes' : 'No' }}</td>
+                <td>{{ cargo.status }}</td>
+                <td>{{ cargo.createdAt ? cargo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cargo.updatedAt ? cargo.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('cargo_show', {'id': cargo.id}) }}">show</a>
+                    <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    <div>{{ 'nb_of_cargo'|trans({count: cargos|length}) }}</div>
+    {% if previous >= 0 %}
+        <a href="{{ path('cargo_index', {offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < cargos|length %}
+        <a href="{{ path('cargo_index', { offset: next }) }}">Next</a>
+    {% endif %}
+{% endblock %}

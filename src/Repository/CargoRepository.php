@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Business;
 use App\Entity\Cargo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -14,9 +17,40 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CargoRepository extends ServiceEntityRepository
 {
+    const PAGINATOR_PER_PAGE = 20;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Cargo::class);
+    }
+
+    public function getAllCargo(int $offset): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.status NOT IN  (:statuses)')
+            ->setParameter('statuses', [Cargo::STATUS_CLOSE])
+            ->setFirstResult($offset)
+            ;
+    }
+
+    public function getQueryBuildCargoByBusiness(Business $business, int $offset): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.owner = :business')
+            ->andWhere('c.status NOT IN  (:statuses)')
+            ->setParameter('business', $business)
+            ->setParameter('statuses', [Cargo::STATUS_CLOSE])
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ;
+    }
+
+    public function getPaginator(QueryBuilder $query): Paginator
+    {
+        $query
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+        ;
+        return new Paginator($query->getQuery());
     }
 
     // /**

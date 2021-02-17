@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,10 +19,12 @@ class Cargo extends Entity
     const STATUS_CHOICE = [
         self::STATUS_OPEN,
         self::STATUS_CLOSE,
+        self::STATUS_REMOVE,
     ];
 
     const STATUS_OPEN = 'STATUS_OPEN';
     const STATUS_CLOSE = 'STATUS_CLOSE';
+    const STATUS_REMOVE = 'STATUS_REMOVE';
 
     const PREPAYMENT_TYPE_CHOICE = [
         self::PREPAYMENT_TYPE_FUEL,

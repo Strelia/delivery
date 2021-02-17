@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cargo index{% endblock %}
+
+{% block body %}
+    <h1>Cargo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <th>{% trans %}Business{% endtrans %}</th>
+                <th>{% trans %}Address From{% endtrans %}</th>
+                <th>{% trans %}Address To{% endtrans %}</th>
+                <th>{% trans %}Date Start Min{% endtrans %}</th>
+                <th>{% trans %}Date Start Max{% endtrans %}</th>
+                <th>{% trans %}Price{% endtrans %}</th>
+                <th>{% trans %}Payment Kind{% endtrans %}</th>
+                <th>{% trans %}Created At{% endtrans %}</th>
+                <th>{% trans %}Updated At{% endtrans %}</th>
+                <th class="actions"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cargo in cargos %}
+            <tr>
+                <td>{{ cargo.name }}</td>
+                <td>{{ cargo.owner }}</td>
+                <td>{{ cargo.addressFrom }}</td>
+                <td>{{ cargo.addressTo }}</td>
+                <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.price }}</td>
+                <td>{{ cargo.paymentKind|trans }}</td>
+                <td>{{ cargo.createdAt ? cargo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cargo.updatedAt ? cargo.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a title="show" class="btn btn-primary btn-sm" href="{{ path('cargo_show', {'id': cargo.id}) }}">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    {% if cargo.owner.id == app.user.company.id %}
+                    <a title="edit"  class="btn btn-success btn-sm" href="{{ path('cargo_edit', {'id': cargo.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="29">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>{{ 'nb_of_cargo'|trans({count: cargos|length}) }}</div>
+    {% if previous >= 0 %}
+        <a href="{{ path('cargo_index', {offset: previous }) }}">Previous</a>
+    {% endif %}
+    {% if next < cargos|length %}
+        <a href="{{ path('cargo_index', { offset: next }) }}">Next</a>
+    {% endif %}
+{% endblock %}

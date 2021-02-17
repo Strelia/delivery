@@ -9,17 +9,17 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class BusinessVoter extends Voter
+class CargoVoter extends Voter
 {
-    const EDIT = 'business-edit';
+    const EDIT = 'cargo-save';
 
     /**
      * @inheritDoc
      */
-    protected function supports($attribute, $subject): bool
-    {;
+    protected function supports($attribute, $subject)
+    {
         return in_array($attribute, [self::EDIT])
-            && $subject instanceof Business;
+            && $subject instanceof Cargo;
     }
 
     /**
@@ -35,14 +35,14 @@ class BusinessVoter extends Voter
 
         switch ($attribute) {
             case self::EDIT:
-                return $this->canEdit($subject, $user);
+                return $this->canEdit($user, $subject);
         }
 
         return false;
     }
 
-    protected function canEdit(Business $business, User $user): bool
+    protected function canEdit(User $user, Cargo $cargo): bool
     {
-        return $business->getStaff()->contains($user);
+        return $user->getCompany() === $cargo->getOwner();
     }
 }

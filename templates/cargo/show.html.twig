@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cargo{% endblock %}
+
+{% block body %}
+    <h1>Cargo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cargo.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ cargo.name }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ cargo.weight }}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{{ cargo.volume }}</td>
+            </tr>
+            <tr>
+                <th>Length</th>
+                <td>{{ cargo.length }}</td>
+            </tr>
+            <tr>
+                <th>Width</th>
+                <td>{{ cargo.width }}</td>
+            </tr>
+            <tr>
+                <th>Diameter</th>
+                <td>{{ cargo.diameter }}</td>
+            </tr>
+            <tr>
+                <th>CountBelt</th>
+                <td>{{ cargo.countBelt }}</td>
+            </tr>
+            <tr>
+                <th>AddressFrom</th>
+                <td>{{ cargo.addressFrom }}</td>
+            </tr>
+            <tr>
+                <th>AddressTo</th>
+                <td>{{ cargo.addressTo }}</td>
+            </tr>
+            <tr>
+                <th>HasHitch</th>
+                <td>{{ cargo.hasHitch ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>HasRuberTyres</th>
+                <td>{{ cargo.hasRuberTyres ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>HasHook</th>
+                <td>{{ cargo.hasHook ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsTir</th>
+                <td>{{ cargo.isTir ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsCMR</th>
+                <td>{{ cargo.isCMR ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsT1</th>
+                <td>{{ cargo.isT1 ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CountCars</th>
+                <td>{{ cargo.countCars }}</td>
+            </tr>
+            <tr>
+                <th>DateStartMin</th>
+                <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateStartMax</th>
+                <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ cargo.price }}</td>
+            </tr>
+            <tr>
+                <th>PaymentKind</th>
+                <td>{{ cargo.paymentKind }}</td>
+            </tr>
+            <tr>
+                <th>IsVat</th>
+                <td>{{ cargo.isVat ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>PrepaymentKind</th>
+                <td>{{ cargo.prepaymentKind }}</td>
+            </tr>
+            <tr>
+                <th>Prepayment</th>
+                <td>{{ cargo.prepayment }}</td>
+            </tr>
+            <tr>
+                <th>IsHiddenUserRequest</th>
+                <td>{{ cargo.isHiddenUserRequest ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ cargo.status }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ cargo.createdAt ? cargo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ cargo.updatedAt ? cargo.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('cargo_index') }}">back to list</a>
+
+    <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
+
+    {{ include('cargo/_delete_form.html.twig') }}
+{% endblock %}
