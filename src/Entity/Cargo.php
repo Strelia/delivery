@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CargoRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=CargoRepository::class)
  * @ORM\Table(name="cargo")
  */
+#[ApiResource]
 class Cargo extends Entity
 {
     const STATUS_CHOICE = [

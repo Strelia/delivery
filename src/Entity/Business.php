@@ -9,12 +9,22 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=BusinessRepository::class)
  * @ORM\Table (name="businesses")
- * @UniqueEntity(fields={"name"}, message="There is already an account with this username")
  */
+
+#[UniqueEntity(fields: ['name'], message: 'There is already an account with this username')]
+#[ApiResource(
+    collectionOperations: ['get' => ['normalization_context' => ['groups'=> 'business:list']]],
+    itemOperations: [
+        'get' => ['normalization_context' => ['groups'=> 'business:item']]
+    ],
+    paginationEnabled: true
+)]
 class Business extends Entity
 {
 
@@ -51,6 +61,7 @@ class Business extends Entity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['business:item', 'business:list'])]
     private ?int $id = null;
 
     /**
