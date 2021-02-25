@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Cargo;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -28,6 +31,14 @@ class CargoCrudController extends AbstractCrudController
         $this->paymentType = array_combine(Cargo::PAYMENT_TYPE_CHOICE, Cargo::PAYMENT_TYPE_CHOICE);
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+//            ->add(Crud::PAGE_EDIT, Action::SAVE_AND_ADD_ANOTHER)
+            ;
+    }
+
 
     public static function getEntityFqcn(): string
     {
@@ -41,36 +52,35 @@ class CargoCrudController extends AbstractCrudController
         yield AssociationField::new('owner');
         yield IntegerField::new('weight');
         yield IntegerField::new('volume');
-        yield IntegerField::new('length');
-        yield IntegerField::new('width');
-        yield IntegerField::new('diameter');
-        yield IntegerField::new('countBelt');
+        yield IntegerField::new('length')->hideOnIndex();
+        yield IntegerField::new('width')->hideOnIndex();
+        yield IntegerField::new('diameter')->hideOnIndex();
+        yield IntegerField::new('countBelt')->hideOnIndex();
         yield TextField::new('addressFrom');
         yield TextField::new('addressTo');
-        yield AssociationField::new('adr');
-        yield AssociationField::new('carBodies');
-        yield BooleanField::new('hasHitch');
-        yield BooleanField::new('hasRuberTyres');
-        yield BooleanField::new('hasHook');
-        yield BooleanField::new('isTir');
-        yield BooleanField::new('isCMR', 'Is CMR');
-        yield BooleanField::new('isT1');
-        yield IntegerField::new('countCars');
+        yield AssociationField::new('adr')->hideOnIndex();
+        yield AssociationField::new('carBodies')->hideOnIndex();
+        yield BooleanField::new('hasHitch')->hideOnIndex();
+        yield BooleanField::new('hasRuberTyres')->hideOnIndex();
+        yield BooleanField::new('hasHook')->hideOnIndex();
+        yield BooleanField::new('isTir')->hideOnIndex();
+        yield BooleanField::new('isCMR', 'Is CMR')->hideOnIndex();
+        yield BooleanField::new('isT1')->hideOnIndex();
         yield DateField::new('dateStartMin');
         yield DateField::new('dateStartMax');
         yield IntegerField::new('price');
         yield ChoiceField::new('paymentKind')
-            ->setChoices($this->paymentType);
-        yield BooleanField::new('isVat');
+            ->setChoices($this->paymentType)->hideOnIndex();
+        yield BooleanField::new('isVat')->hideOnIndex();
         yield ChoiceField::new('prepaymentKind')
-            ->setChoices($this->prepaymentType);
-        yield IntegerField::new('prepayment');
-        yield BooleanField::new('isHiddenUserRequest');
+            ->setChoices($this->prepaymentType)->hideOnIndex();
+        yield IntegerField::new('prepayment')->hideOnIndex();
+        yield BooleanField::new('isHiddenUserRequest')->hideOnIndex();
         yield ChoiceField::new('status')
             ->setChoices($this->statusChoice);
-        yield AssociationField::new('loadingKinds');
-        yield AssociationField::new('unloadingKinds');
-        yield AssociationField::new('packagingKind');
+        yield AssociationField::new('loadingKinds')->hideOnIndex();
+        yield AssociationField::new('unloadingKinds')->hideOnIndex();
+        yield AssociationField::new('packagingKind')->hideOnIndex();
     }
 
 }

@@ -21,12 +21,12 @@ class Cargo extends Entity
     const STATUS_CHOICE = [
         self::STATUS_OPEN,
         self::STATUS_CLOSE,
-        self::STATUS_REMOVE,
+        self::STATUS_REMOVED,
     ];
 
     const STATUS_OPEN = 'STATUS_OPEN';
     const STATUS_CLOSE = 'STATUS_CLOSE';
-    const STATUS_REMOVE = 'STATUS_REMOVE';
+    const STATUS_REMOVED = 'STATUS_REMOVED';
 
     const PREPAYMENT_TYPE_CHOICE = [
         self::PREPAYMENT_TYPE_FUEL,

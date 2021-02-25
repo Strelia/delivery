@@ -76,6 +76,10 @@ class CargoType extends AbstractType
             ->add('isVat', CheckboxType::class, [
                 'required' => false
             ])
+            ->add('prepaymentKind', ChoiceType::class, [
+                'label' => 'Payment Kind',
+                'choices' => array_combine(Cargo::PREPAYMENT_TYPE_CHOICE, Cargo::PREPAYMENT_TYPE_CHOICE)
+            ])
             ->add('prepayment', NumberType::class, [
                 'required' => false
             ])
