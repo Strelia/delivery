@@ -39,7 +39,7 @@ class CargoController extends AbstractController
             $entityManager->persist($cargo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('cargo_search', ['id' => $this->getUser()->getCompany()->getId]);
+            return $this->redirectToRoute('cargo_search', ['id' => $this->getUser()->getCompany()->getId()]);
         }
 
         return $this->render('cargo/new.html.twig', [

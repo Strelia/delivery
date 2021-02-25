@@ -9,7 +9,7 @@
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
     {% endblock stylesheets %}
-
+    {{ app.user }}
 <div class="example-wrapper">
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">

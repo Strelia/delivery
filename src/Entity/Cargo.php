@@ -79,7 +79,7 @@ class Cargo extends Entity
      */
     #[
         Assert\Range(
-            notInRangeMessage: "You must be between {{ min }} volume and {{ max }}tone tall to enter",
+            notInRangeMessage: "You must be between {{ min }} volume and {{ max }} cubic meter tall to enter",
             min: 1,
             max: 400
         )
@@ -136,7 +136,7 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The has hitch should not be blank."),
+        Assert\NotNull(message: "The has hitch should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $hasHitch;
@@ -145,7 +145,7 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The has ruber tyres should not be blank."),
+        Assert\NotNull(message: "The has ruber tyres should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $hasRuberTyres;
@@ -154,7 +154,7 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The has hook should not be blank."),
+        Assert\NotNull(message: "The has hook should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $hasHook;
@@ -163,7 +163,7 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The is tir should not be blank."),
+        Assert\NotNull(message: "The is tir should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $isTir;
@@ -172,7 +172,7 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The is CMR should not be blank."),
+        Assert\NotNull(message: "The is CMR should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $isCMR;
@@ -181,22 +181,10 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank(message: "The is T1 should not be blank."),
+        Assert\NotNull(message: "The is T1 should not be blank."),
         Assert\Type(type: "bool")
     ]
     private ?bool $isT1;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    #[
-        Assert\NotBlank(message: "The has hook should not be blank."),
-        Assert\Range(
-            notInRangeMessage: "The count cars must be greater than {{ min }}",
-            min: 1
-        )
-    ]
-    private ?int $countCars;
 
     /**
      * @ORM\Column(type="date")
@@ -232,7 +220,8 @@ class Cargo extends Entity
      * @ORM\Column(type="boolean")
      */
     #[
-        Assert\NotBlank (message: "The is vat should not be blank.")
+        Assert\NotNull (message: "The is vat should not be blank."),
+        Assert\Type(type: "bool")
     ]
     private ?bool $isVat;
 
@@ -291,20 +280,20 @@ class Cargo extends Entity
      */
     private ?PackagingKind $packagingKind;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RequestCargo::class, mappedBy="cargo")
+     */
+    private $requestCargo;
+
     public function __construct()
     {
         $this->carBodies = new ArrayCollection();
         $this->loadingKinds = new ArrayCollection();
         $this->unloadingKinds = new ArrayCollection();
 
-        $this->hasHitch = false;
-        $this->hasRuberTyres = false;
-        $this->hasHook = false;
-        $this->isTir = false;
-        $this->isCMR = false;
-        $this->isT1 = false;
-        $this->isVat = false;
-        $this->isHiddenUserRequest = false;
+        $this->requestCargo = new ArrayCollection();
+
+        $this->setStatus(self::STATUS_OPEN);
     }
 
     public function getId(): ?int
@@ -540,18 +529,6 @@ class Cargo extends Entity
         return $this;
     }
 
-    public function getCountCars(): ?int
-    {
-        return $this->countCars;
-    }
-
-    public function setCountCars(int $countCars): self
-    {
-        $this->countCars = $countCars;
-
-        return $this;
-    }
-
     public function getDateStartMin(): ?DateTimeInterface
     {
         return $this->dateStartMin;
@@ -716,6 +693,36 @@ class Cargo extends Entity
     public function setPackagingKind(?PackagingKind $packagingKind): self
     {
         $this->packagingKind = $packagingKind;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RequestCargo[]
+     */
+    public function getRequestCargo(): Collection
+    {
+        return $this->requestCargo;
+    }
+
+    public function addRequestCargo(RequestCargo $requestCargo): self
+    {
+        if (!$this->requestCargo->contains($requestCargo)) {
+            $this->requestCargo[] = $requestCargo;
+            $requestCargo->setCargo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequestCargo(RequestCargo $requestCargo): self
+    {
+        if ($this->requestCargo->removeElement($requestCargo)) {
+            // set the owning side to null (unless already changed)
+            if ($requestCargo->getCargo() === $this) {
+                $requestCargo->setCargo(null);
+            }
+        }
 
         return $this;
     }
