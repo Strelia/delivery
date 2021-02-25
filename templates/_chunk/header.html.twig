@@ -62,6 +62,11 @@
                             {% trans %}menu.client.profile{% endtrans %}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown-0">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('admin') }}">
+                                    Admin
+                                </a>
+                            {% endif %}
                             {% if app.user %}
                                 <a class="dropdown-item" href="{{ path('user_show', {'id': app.user.id}) }}">
                                     {% trans %}menu.client.profile{% endtrans %}
