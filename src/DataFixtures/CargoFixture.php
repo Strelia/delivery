@@ -63,7 +63,6 @@ class CargoFixture extends Fixture implements DependentFixtureInterface
         $cargo->setVolume($faker->numberBetween(100, 200));
         $cargo->setAddressFrom("$faker->country $faker->city $faker->streetName, $faker->buildingNumber");
         $cargo->setAddressTo("$faker->country $faker->city $faker->streetName, $faker->buildingNumber");
-        $cargo->setCountCars($faker->numberBetween(1, 3));
         $dateMin = new DateTime($faker->date('y-m-d', '+5d'));
         $dateMin->format($this->dateFormat);
         $cargo->setDateStartMin($dateMin);

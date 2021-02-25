@@ -9,34 +9,33 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Weight</th>
-            <th>Volume</th>
-            <th>Length</th>
-            <th>Width</th>
-            <th>Diameter</th>
-            <th>CountBelt</th>
-            <th>AddressFrom</th>
-            <th>AddressTo</th>
-            <th>HasHitch</th>
-            <th>HasRuberTyres</th>
-            <th>HasHook</th>
-            <th>IsTir</th>
-            <th>IsCMR</th>
-            <th>IsT1</th>
-            <th>CountCars</th>
-            <th>DateStartMin</th>
-            <th>DateStartMax</th>
-            <th>Price</th>
-            <th>PaymentKind</th>
-            <th>IsVat</th>
-            <th>PrepaymentKind</th>
-            <th>Prepayment</th>
-            <th>IsHiddenUserRequest</th>
-            <th>Status</th>
-            <th>CreatedAt</th>
-            <th>UpdatedAt</th>
-            <th>actions</th>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Weight{% endtrans %}</th>
+            <th>{% trans %}Volume{% endtrans %}</th>
+            <th>{% trans %}Length{% endtrans %}</th>
+            <th>{% trans %}Width{% endtrans %}</th>
+            <th>{% trans %}Diameter{% endtrans %}</th>
+            <th>{% trans %}CountBelt{% endtrans %}</th>
+            <th>{% trans %}AddressFrom{% endtrans %}</th>
+            <th>{% trans %}AddressTo{% endtrans %}</th>
+            <th>{% trans %}HasHitch{% endtrans %}</th>
+            <th>{% trans %}HasRuberTyres{% endtrans %}</th>
+            <th>{% trans %}HasHook{% endtrans %}</th>
+            <th>{% trans %}IsTir{% endtrans %}</th>
+            <th>{% trans %}IsCMR{% endtrans %}</th>
+            <th>{% trans %}IsT1{% endtrans %}</th>
+            <th>{% trans %}DateStartMin{% endtrans %}</th>
+            <th>{% trans %}DateStartMax{% endtrans %}</th>
+            <th>{% trans %}Price{% endtrans %}</th>
+            <th>{% trans %}PaymentKind{% endtrans %}</th>
+            <th>{% trans %}IsVat{% endtrans %}</th>
+            <th>{% trans %}PrepaymentKind{% endtrans %}</th>
+            <th>{% trans %}Prepayment{% endtrans %}</th>
+            <th>{% trans %}IsHiddenUserRequest{% endtrans %}</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+            <th>{% trans %}CreatedAt{% endtrans %}</th>
+            <th>{% trans %}UpdatedAt{% endtrans %}</th>
+            <th class="actions"></th>
         </tr>
         </thead>
         <tbody>
@@ -60,12 +59,12 @@
                 <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
                 <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
                 <td>{{ cargo.price }}</td>
-                <td>{{ cargo.paymentKind }}</td>
+                <td>{{ cargo.paymentKind|trans }}</td>
                 <td>{{ cargo.isVat ? 'Yes' : 'No' }}</td>
-                <td>{{ cargo.prepaymentKind }}</td>
+                <td>{{ cargo.prepaymentKind|trans }}</td>
                 <td>{{ cargo.prepayment }}</td>
                 <td>{{ cargo.isHiddenUserRequest ? 'Yes' : 'No' }}</td>
-                <td>{{ cargo.status }}</td>
+                <td>{{ cargo.status|trans }}</td>
                 <td>{{ cargo.createdAt ? cargo.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ cargo.updatedAt ? cargo.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
