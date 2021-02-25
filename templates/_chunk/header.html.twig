@@ -20,37 +20,38 @@
                         </a>
                     </li>
                     {% if app.user %}
-                    <li class="nav-item dropdown dropdown-hover">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            {% trans %} menu.client.company {% endtrans %}
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown-3">
-                            <a class="nav-link" href="{{ path('business_show', {'id': app.user.company.id}) }}">
-                                {% trans %} menu.client.company {% endtrans %}
+                        {% if app.user.company %}
+                            <li class="nav-item dropdown dropdown-hover">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false">
+                                    {% trans %} menu.client.company {% endtrans %}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown-3">
+                                    <a class="nav-link" href="{{ path('business_show', {'id': app.user.company.id}) }}">
+                                        {% trans %} menu.client.company {% endtrans %}
+                                    </a>
+                                    <a class="nav-link" href="{{ path('business_cargo', {'id': app.user.company.id}) }}">
+                                        {% trans %} menu.client.company.cargo {% endtrans %}
+                                    </a>
+                                    <a class="nav-link" href="{{ path('business_staff', {'id': app.user.company.id}) }}">
+                                        {% trans %} menu.client.staff {% endtrans %}
+                                    </a>
+                                    <a class="nav-link" href="{{ path('business_staff', {'id': app.user.company.id}) }}">
+                                        {% trans %} menu.client.staff {% endtrans %}
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('cargo_index') }}">
+                                {% trans %} menu.client.cargo.list {% endtrans %}
                             </a>
-                            <a class="nav-link" href="{{ path('business_cargo', {'id': app.user.company.id}) }}">
-                                {% trans %} menu.client.company.cargo {% endtrans %}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('business_index') }}">
+                                {% trans %} menu.client.company.list {% endtrans %}
                             </a>
-                            <a class="nav-link" href="{{ path('business_staff', {'id': app.user.company.id}) }}">
-                                {% trans %} menu.client.staff {% endtrans %}
-                            </a>
-                            <a class="nav-link" href="{{ path('business_staff', {'id': app.user.company.id}) }}">
-                                {% trans %} menu.client.staff {% endtrans %}
-                            </a>
-                        </div>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('cargo_index') }}">
-                            {% trans %} menu.client.cargo.list {% endtrans %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('business_index') }}">
-                            {% trans %} menu.client.company.list {% endtrans %}
-                        </a>
-                    </li>
+                        </li>
                     {% endif %}
                 </ul>
 
