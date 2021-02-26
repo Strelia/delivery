@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RequestCargo{% endblock %}
+
+{% block body %}
+    <h1>RequestCargo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ request_cargo.id }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ request_cargo.status }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ request_cargo.price }}</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ request_cargo.weight }}</td>
+            </tr>
+            <tr>
+                <th>Volume</th>
+                <td>{{ request_cargo.volume }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ request_cargo.note }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('request_cargo_index') }}">back to list</a>
+
+    <a href="{{ path('request_cargo_edit', {'id': request_cargo.id}) }}">edit</a>
+
+    {{ include('request_cargo/_delete_form.html.twig') }}
+{% endblock %}

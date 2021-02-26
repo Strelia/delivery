@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RequestCargo index{% endblock %}
+
+{% block body %}
+
+    <h1>RequestCargo index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Weight</th>
+                <th>Volume</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for request_cargo in request_cargos %}
+            <tr>
+                <td>{{ request_cargo.id }}</td>
+                <td>{{ request_cargo.status }}</td>
+                <td>{{ request_cargo.price }}</td>
+                <td>{{ request_cargo.weight }}</td>
+                <td>{{ request_cargo.volume }}</td>
+                <td>{{ request_cargo.note }}</td>
+                <td>
+                    <a href="{{ path('request_cargo_show', {'id': request_cargo.id}) }}">show</a>
+                    <a href="{{ path('request_cargo_edit', {'id': request_cargo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('request_cargo_new') }}">Create new</a>
+{% endblock %}
