@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cargo;
 use App\Entity\RequestCargo;
 use App\Form\RequestCargoType;
 use App\Repository\RequestCargoRepository;
@@ -10,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/request/cargo', name: 'request_cargo_')]
+#[Route('', name: 'request_cargo_')]
 class RequestCargoController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
@@ -22,19 +23,24 @@ class RequestCargoController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    #[Route('/cargo/{id}/request/new', name: 'new', methods: ['GET', 'POST'])]
+    public function new(Request $request, Cargo $cargo): Response
     {
         $requestCargo = new RequestCargo();
+        $requestCargo->setPrice($cargo->getPrice());
+        $requestCargo->setWeight($cargo->getWeight());
+        $requestCargo->setVolume($cargo->getVolume());
         $form = $this->createForm(RequestCargoType::class, $requestCargo);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $requestCargo->setExecutor($this->getUser()->getCompany());
+            $requestCargo->setCargo($cargo);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($requestCargo);
             $entityManager->flush();
 
-            return $this->redirectToRoute('request_cargo_index');
+            return $this->redirectToRoute('cargo_show', ['id:' => $cargo->getId()]);
         }
 
         return $this->render('request_cargo/new.html.twig', [
@@ -60,7 +66,7 @@ class RequestCargoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('request_cargo_index');
+            return $this->redirectToRoute('cargo_show', ['id:' => $requestCargo->getCargo()->getId()]);
         }
 
         return $this->render('request_cargo/edit.html.twig', [

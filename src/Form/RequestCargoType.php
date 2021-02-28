@@ -12,13 +12,10 @@ class RequestCargoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
             ->add('price')
             ->add('weight')
             ->add('volume')
             ->add('note')
-            ->add('cargo')
-            ->add('executor')
         ;
     }
 

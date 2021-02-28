@@ -197,10 +197,16 @@ class Business extends Entity
     ]
     private ?string $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RequestCargo::class, mappedBy="executor", fetch="EXTRA_LAZY")
+     */
+    private $requestCargos;
+
     public function __construct()
     {
         $this->staff = new ArrayCollection();
         $this->cargo = new ArrayCollection();
+        $this->requestCargos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -389,6 +395,36 @@ class Business extends Entity
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RequestCargo[]
+     */
+    public function getRequestCargos(): Collection
+    {
+        return $this->requestCargos;
+    }
+
+    public function addRequestCargo(RequestCargo $requestCargo): self
+    {
+        if (!$this->requestCargos->contains($requestCargo)) {
+            $this->requestCargos[] = $requestCargo;
+            $requestCargo->setExecutor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequestCargo(RequestCargo $requestCargo): self
+    {
+        if ($this->requestCargos->removeElement($requestCargo)) {
+            // set the owning side to null (unless already changed)
+            if ($requestCargo->getExecutor() === $this) {
+                $requestCargo->setExecutor(null);
+            }
+        }
 
         return $this;
     }

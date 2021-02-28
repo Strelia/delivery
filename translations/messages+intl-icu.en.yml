@@ -132,6 +132,7 @@ None: None
 files: files
 Agree terms: Agree terms
 Edit: Edit
+Note: Note
 
 nb_of_cargo: >-
   {count, plural,

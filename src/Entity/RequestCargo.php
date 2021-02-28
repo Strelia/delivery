@@ -11,7 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class RequestCargo
 {
     const STATUS_PUBLISHED = 'STATUS_PUBLISHED';
-
+    const STATUS_APPROVED = 'STATUS_APPROVED';
+    const STATUS_DECLINED = 'STATUS_DECLINED';
 
     /**
      * @ORM\Id
@@ -56,6 +57,11 @@ class RequestCargo
      * @ORM\Column(type="text", nullable=true)
      */
     private ?string $note = null;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $isEditable;
 
     public function getId(): ?int
     {
@@ -142,6 +148,18 @@ class RequestCargo
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getIsEditable(): ?bool
+    {
+        return $this->isEditable;
+    }
+
+    public function setIsEditable(bool $isEditable): self
+    {
+        $this->isEditable = $isEditable;
 
         return $this;
     }

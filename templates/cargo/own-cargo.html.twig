@@ -10,31 +10,32 @@
         <thead>
         <tr>
             <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Address From{% endtrans %}</th>
+            <th>{% trans %}Address To{% endtrans %}</th>
+            <th>{% trans %}Date Start Min{% endtrans %}</th>
+            <th>{% trans %}Date Start Max{% endtrans %}</th>
+            <th>{% trans %}Price{% endtrans %}</th>
+            <th>{% trans %}Payment Kind{% endtrans %}</th>
+            <th>{% trans %}Number Of Requests{% endtrans %}</th>
             <th>{% trans %}Weight{% endtrans %}</th>
             <th>{% trans %}Volume{% endtrans %}</th>
             <th>{% trans %}Length{% endtrans %}</th>
             <th>{% trans %}Width{% endtrans %}</th>
             <th>{% trans %}Diameter{% endtrans %}</th>
-            <th>{% trans %}CountBelt{% endtrans %}</th>
-            <th>{% trans %}AddressFrom{% endtrans %}</th>
-            <th>{% trans %}AddressTo{% endtrans %}</th>
-            <th>{% trans %}HasHitch{% endtrans %}</th>
-            <th>{% trans %}HasRuberTyres{% endtrans %}</th>
-            <th>{% trans %}HasHook{% endtrans %}</th>
-            <th>{% trans %}IsTir{% endtrans %}</th>
-            <th>{% trans %}IsCMR{% endtrans %}</th>
-            <th>{% trans %}IsT1{% endtrans %}</th>
-            <th>{% trans %}DateStartMin{% endtrans %}</th>
-            <th>{% trans %}DateStartMax{% endtrans %}</th>
-            <th>{% trans %}Price{% endtrans %}</th>
-            <th>{% trans %}PaymentKind{% endtrans %}</th>
-            <th>{% trans %}IsVat{% endtrans %}</th>
-            <th>{% trans %}PrepaymentKind{% endtrans %}</th>
+            <th>{% trans %}Count Belt{% endtrans %}</th>
+            <th>{% trans %}Has Hitch{% endtrans %}</th>
+            <th>{% trans %}Has Ruber Tyres{% endtrans %}</th>
+            <th>{% trans %}Has Hook{% endtrans %}</th>
+            <th>{% trans %}Is Tir{% endtrans %}</th>
+            <th>{% trans %}Is CMR{% endtrans %}</th>
+            <th>{% trans %}Is T1{% endtrans %}</th>
+            <th>{% trans %}Is Vat{% endtrans %}</th>
+            <th>{% trans %}Prepayment Kind{% endtrans %}</th>
             <th>{% trans %}Prepayment{% endtrans %}</th>
-            <th>{% trans %}IsHiddenUserRequest{% endtrans %}</th>
+            <th>{% trans %}Is Hidden User Request{% endtrans %}</th>
             <th>{% trans %}Status{% endtrans %}</th>
-            <th>{% trans %}CreatedAt{% endtrans %}</th>
-            <th>{% trans %}UpdatedAt{% endtrans %}</th>
+            <th>{% trans %}Created At{% endtrans %}</th>
+            <th>{% trans %}Updated At{% endtrans %}</th>
             <th class="actions"></th>
         </tr>
         </thead>
@@ -42,24 +43,25 @@
         {% for cargo in cargos %}
             <tr>
                 <td>{{ cargo.name }}</td>
+                <td>{{ cargo.addressFrom }}</td>
+                <td>{{ cargo.addressTo }}</td>
+                <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
+                <td>{{ cargo.price }}</td>
+                <td>{{ cargo.paymentKind|trans }}</td>
+                <td>{{ cargo.requestCargo|length }}</td>
                 <td>{{ cargo.weight }}</td>
                 <td>{{ cargo.volume }}</td>
                 <td>{{ cargo.length }}</td>
                 <td>{{ cargo.width }}</td>
                 <td>{{ cargo.diameter }}</td>
                 <td>{{ cargo.countBelt }}</td>
-                <td>{{ cargo.addressFrom }}</td>
-                <td>{{ cargo.addressTo }}</td>
                 <td>{{ cargo.hasHitch ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.hasRuberTyres ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.hasHook ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.isTir ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.isCMR ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.isT1 ? 'Yes' : 'No' }}</td>
-                <td>{{ cargo.dateStartMin ? cargo.dateStartMin|date('Y-m-d') : '' }}</td>
-                <td>{{ cargo.dateStartMax ? cargo.dateStartMax|date('Y-m-d') : '' }}</td>
-                <td>{{ cargo.price }}</td>
-                <td>{{ cargo.paymentKind|trans }}</td>
                 <td>{{ cargo.isVat ? 'Yes' : 'No' }}</td>
                 <td>{{ cargo.prepaymentKind|trans }}</td>
                 <td>{{ cargo.prepayment }}</td>
@@ -69,6 +71,7 @@
                 <td>{{ cargo.updatedAt ? cargo.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('cargo_show', {'id': cargo.id}) }}">show</a>
+{#                    <a href="{{ path('cargo_requests', {'id': cargo.id}) }}">Requests</a>#}
                     <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
                 </td>
             </tr>

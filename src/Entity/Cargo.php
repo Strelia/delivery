@@ -283,7 +283,7 @@ class Cargo extends Entity
     /**
      * @ORM\OneToMany(targetEntity=RequestCargo::class, mappedBy="cargo")
      */
-    private $requestCargo;
+    private ArrayCollection|PersistentCollection $requestCargo;
 
     public function __construct()
     {

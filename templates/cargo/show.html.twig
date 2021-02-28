@@ -3,7 +3,11 @@
 {% block title %}Cargo{% endblock %}
 
 {% block body %}
-    <h1>Cargo</h1>
+    <h1>Cargo
+        {% if cargo.owner != app.user.company %}
+            ({{ cargo.owner.name }})
+        {% endif %}
+        </h1>
 
     <table class="table">
         <tbody>
@@ -116,7 +120,10 @@
 
     <a href="{{ path('cargo_index') }}">back to list</a>
 
-    <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
-
-    {{ include('cargo/_delete_form.html.twig') }}
+    {% if cargo.owner == app.user.company %}
+        <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
+        {{ include('cargo/_delete_form.html.twig') }}
+    {% else %}
+        <a href="{{ path('request_cargo_new', {'id': cargo.id}) }}">Create Request</a>
+    {% endif %}
 {% endblock %}
