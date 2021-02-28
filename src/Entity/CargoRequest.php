@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\RequestCargoRepository;
+use App\Repository\CargoRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RequestCargoRepository::class)
+ * @ORM\Entity(repositoryClass=CargoRequestRepository::class)
  */
-class RequestCargo
+class CargoRequest
 {
     const STATUS_PUBLISHED = 'STATUS_PUBLISHED';
     const STATUS_APPROVED = 'STATUS_APPROVED';
@@ -22,13 +22,13 @@ class RequestCargo
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cargo::class, inversedBy="requestCargo")
+     * @ORM\ManyToOne(targetEntity=Cargo::class, inversedBy="CargoRequest")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cargo;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Business::class, inversedBy="requestCargos")
+     * @ORM\ManyToOne(targetEntity=Business::class, inversedBy="CargoRequests")
      * @ORM\JoinColumn(nullable=false)
      */
     private $executor;

@@ -198,15 +198,15 @@ class Business extends Entity
     private ?string $email;
 
     /**
-     * @ORM\OneToMany(targetEntity=RequestCargo::class, mappedBy="executor", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity=CargoRequest::class, mappedBy="executor", fetch="EXTRA_LAZY")
      */
-    private $requestCargos;
+    private $CargoRequests;
 
     public function __construct()
     {
         $this->staff = new ArrayCollection();
         $this->cargo = new ArrayCollection();
-        $this->requestCargos = new ArrayCollection();
+        $this->CargoRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -400,29 +400,29 @@ class Business extends Entity
     }
 
     /**
-     * @return Collection|RequestCargo[]
+     * @return Collection|CargoRequest[]
      */
-    public function getRequestCargos(): Collection
+    public function getCargoRequests(): Collection
     {
-        return $this->requestCargos;
+        return $this->CargoRequests;
     }
 
-    public function addRequestCargo(RequestCargo $requestCargo): self
+    public function addCargoRequest(CargoRequest $CargoRequest): self
     {
-        if (!$this->requestCargos->contains($requestCargo)) {
-            $this->requestCargos[] = $requestCargo;
-            $requestCargo->setExecutor($this);
+        if (!$this->CargoRequests->contains($CargoRequest)) {
+            $this->CargoRequests[] = $CargoRequest;
+            $CargoRequest->setExecutor($this);
         }
 
         return $this;
     }
 
-    public function removeRequestCargo(RequestCargo $requestCargo): self
+    public function removeCargoRequest(CargoRequest $CargoRequest): self
     {
-        if ($this->requestCargos->removeElement($requestCargo)) {
+        if ($this->CargoRequests->removeElement($CargoRequest)) {
             // set the owning side to null (unless already changed)
-            if ($requestCargo->getExecutor() === $this) {
-                $requestCargo->setExecutor(null);
+            if ($CargoRequest->getExecutor() === $this) {
+                $CargoRequest->setExecutor(null);
             }
         }
 

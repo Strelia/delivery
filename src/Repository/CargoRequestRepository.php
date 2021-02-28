@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\RequestCargo;
+use App\Entity\CargoRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method RequestCargo|null find($id, $lockMode = null, $lockVersion = null)
- * @method RequestCargo|null findOneBy(array $criteria, array $orderBy = null)
- * @method RequestCargo[]    findAll()
- * @method RequestCargo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method CargoRequest|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CargoRequest|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CargoRequest[]    findAll()
+ * @method CargoRequest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RequestCargoRepository extends ServiceEntityRepository
+class CargoRequestRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RequestCargo::class);
+        parent::__construct($registry, CargoRequest::class);
     }
 
     // /**
-    //  * @return RequestCargo[] Returns an array of RequestCargo objects
+    //  * @return CargoRequest[] Returns an array of CargoRequest objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class RequestCargoRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?RequestCargo
+    public function findOneBySomeField($value): ?CargoRequest
     {
         return $this->createQueryBuilder('r')
             ->andWhere('r.exampleField = :val')

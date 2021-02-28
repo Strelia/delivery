@@ -71,6 +71,16 @@ class CargoFixture extends Fixture implements DependentFixtureInterface
         $dateMax->format($this->dateFormat);
         $cargo->setDateStartMax($dateMax);
         $cargo->setPrice($faker->numberBetween(1000, 10000));
+
+        $cargo->setHasHitch(false);
+        $cargo->setHasHook(false);
+        $cargo->setHasRuberTyres(false);
+        $cargo->setIsTir(false);
+        $cargo->setIsCMR(false);
+        $cargo->setIsT1(false);
+        $cargo->setIsVat(false);
+        $cargo->setIsHiddenUserRequest(false);
+
         return $cargo;
     }
 

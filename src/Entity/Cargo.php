@@ -133,7 +133,7 @@ class Cargo extends Entity
     private ArrayCollection|PersistentCollection $carBodies;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The has hitch should not be blank."),
@@ -142,7 +142,7 @@ class Cargo extends Entity
     private ?bool $hasHitch;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The has ruber tyres should not be blank."),
@@ -151,7 +151,7 @@ class Cargo extends Entity
     private ?bool $hasRuberTyres;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The has hook should not be blank."),
@@ -160,7 +160,7 @@ class Cargo extends Entity
     private ?bool $hasHook;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The is tir should not be blank."),
@@ -169,7 +169,7 @@ class Cargo extends Entity
     private ?bool $isTir;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The is CMR should not be blank."),
@@ -178,7 +178,7 @@ class Cargo extends Entity
     private ?bool $isCMR;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull(message: "The is T1 should not be blank."),
@@ -217,7 +217,7 @@ class Cargo extends Entity
     private ?string $paymentKind;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     #[
         Assert\NotNull (message: "The is vat should not be blank."),
@@ -242,7 +242,7 @@ class Cargo extends Entity
     private ?int $prepayment;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     private ?bool $isHiddenUserRequest;
 
@@ -281,9 +281,9 @@ class Cargo extends Entity
     private ?PackagingKind $packagingKind;
 
     /**
-     * @ORM\OneToMany(targetEntity=RequestCargo::class, mappedBy="cargo")
+     * @ORM\OneToMany(targetEntity=CargoRequest::class, mappedBy="cargo")
      */
-    private ArrayCollection|PersistentCollection $requestCargo;
+    private ArrayCollection|PersistentCollection $CargoRequest;
 
     public function __construct()
     {
@@ -291,7 +291,7 @@ class Cargo extends Entity
         $this->loadingKinds = new ArrayCollection();
         $this->unloadingKinds = new ArrayCollection();
 
-        $this->requestCargo = new ArrayCollection();
+        $this->CargoRequest = new ArrayCollection();
 
         $this->setStatus(self::STATUS_OPEN);
     }
@@ -698,29 +698,29 @@ class Cargo extends Entity
     }
 
     /**
-     * @return Collection|RequestCargo[]
+     * @return Collection|CargoRequest[]
      */
-    public function getRequestCargo(): Collection
+    public function getCargoRequest(): Collection
     {
-        return $this->requestCargo;
+        return $this->CargoRequest;
     }
 
-    public function addRequestCargo(RequestCargo $requestCargo): self
+    public function addCargoRequest(CargoRequest $CargoRequest): self
     {
-        if (!$this->requestCargo->contains($requestCargo)) {
-            $this->requestCargo[] = $requestCargo;
-            $requestCargo->setCargo($this);
+        if (!$this->CargoRequest->contains($CargoRequest)) {
+            $this->CargoRequest[] = $CargoRequest;
+            $CargoRequest->setCargo($this);
         }
 
         return $this;
     }
 
-    public function removeRequestCargo(RequestCargo $requestCargo): self
+    public function removeCargoRequest(CargoRequest $CargoRequest): self
     {
-        if ($this->requestCargo->removeElement($requestCargo)) {
+        if ($this->CargoRequest->removeElement($CargoRequest)) {
             // set the owning side to null (unless already changed)
-            if ($requestCargo->getCargo() === $this) {
-                $requestCargo->setCargo(null);
+            if ($CargoRequest->getCargo() === $this) {
+                $CargoRequest->setCargo(null);
             }
         }
 
