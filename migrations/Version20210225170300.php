@@ -21,7 +21,7 @@ final class Version20210225170300 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE cargo DROP count_cars');
-        $this->addSql('ALTER TABLE request_cargo ALTER status SET DEFAULT \'STATUS_PUBLISHED\'');
+        $this->addSql('ALTER TABLE cargo_request ALTER status SET DEFAULT \'STATUS_PUBLISHED\'');
     }
 
     public function down(Schema $schema) : void
@@ -29,6 +29,6 @@ final class Version20210225170300 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
         $this->addSql('ALTER TABLE cargo ADD count_cars INT NOT NULL');
-        $this->addSql('ALTER TABLE request_cargo ALTER status DROP DEFAULT');
+        $this->addSql('ALTER TABLE cargo_request ALTER status DROP DEFAULT');
     }
 }

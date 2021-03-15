@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Business;
 use App\Entity\CargoRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,14 @@ class CargoRequestRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CargoRequest::class);
+    }
+
+    public function getOneByBussiness(Business $business) {
+        return $this->createQueryBuilder('cr')
+            ->andWhere('cr.executor = :executor')
+            ->setParameter('executor', $business)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     // /**

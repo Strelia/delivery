@@ -9,34 +9,34 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ request_cargo.id }}</td>
+                <td>{{ cargo_request.id }}</td>
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{ request_cargo.status }}</td>
+                <td>{{ cargo_request.status }}</td>
             </tr>
             <tr>
                 <th>Price</th>
-                <td>{{ request_cargo.price }}</td>
+                <td>{{ cargo_request.price }}</td>
             </tr>
             <tr>
                 <th>Weight</th>
-                <td>{{ request_cargo.weight }}</td>
+                <td>{{ cargo_request.weight }}</td>
             </tr>
             <tr>
                 <th>Volume</th>
-                <td>{{ request_cargo.volume }}</td>
+                <td>{{ cargo_request.volume }}</td>
             </tr>
             <tr>
                 <th>Note</th>
-                <td>{{ request_cargo.note }}</td>
+                <td>{{ cargo_request.note }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('request_cargo_index') }}">back to list</a>
+    <a href="{{ path('cargo_request_index') }}">back to list</a>
 
-    <a href="{{ path('request_cargo_edit', {'id': request_cargo.id}) }}">edit</a>
+    <a href="{{ path('cargo_request_edit', {'id': cargo_request.id}) }}">edit</a>
 
-    {{ include('request_cargo/_delete_form.html.twig') }}
+    {{ include('cargo_request/_delete_form.html.twig') }}
 {% endblock %}

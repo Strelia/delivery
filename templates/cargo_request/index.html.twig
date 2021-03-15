@@ -9,7 +9,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Status</th>
                 <th>Price</th>
                 <th>Weight</th>
@@ -19,17 +18,15 @@
             </tr>
         </thead>
         <tbody>
-        {% for request_cargo in request_cargos %}
+        {% for cargo_request in cargo_requests %}
             <tr>
-                <td>{{ request_cargo.id }}</td>
-                <td>{{ request_cargo.status }}</td>
-                <td>{{ request_cargo.price }}</td>
-                <td>{{ request_cargo.weight }}</td>
-                <td>{{ request_cargo.volume }}</td>
-                <td>{{ request_cargo.note }}</td>
+                <td>{{ cargo_request.status }}</td>
+                <td>{{ cargo_request.price }}</td>
+                <td>{{ cargo_request.weight }}</td>
+                <td>{{ cargo_request.volume }}</td>
+                <td>{{ cargo_request.note }}</td>
                 <td>
-                    <a href="{{ path('request_cargo_show', {'id': request_cargo.id}) }}">show</a>
-                    <a href="{{ path('request_cargo_edit', {'id': request_cargo.id}) }}">edit</a>
+                    <a href="{{ path('cargo_request_show', {'id': cargo_request.id}) }}">show</a>
                 </td>
             </tr>
         {% else %}
@@ -39,6 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('request_cargo_new') }}">Create new</a>
 {% endblock %}

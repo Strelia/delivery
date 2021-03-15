@@ -4,15 +4,30 @@ namespace App\Entity;
 
 use App\Repository\CargoRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=CargoRequestRepository::class)
  */
 class CargoRequest
 {
-    const STATUS_PUBLISHED = 'STATUS_PUBLISHED';
-    const STATUS_APPROVED = 'STATUS_APPROVED';
-    const STATUS_DECLINED = 'STATUS_DECLINED';
+    const STATUS_PUBLISHED = 'published';
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_SUBMITTED = 'submitted';
+    const STATUS_APPROVED = 'approved';
+    const STATUS_DECLINED_SYS = 'decline_sys';
+    const STATUS_DECLINED_OWNER = 'decline_owner';
+    const STATUS_DECLINED_EXECUTOR = 'decline_executor';
+
+    const STATUS_CHOICE = [
+        self::STATUS_SUBMITTED,
+        self::STATUS_REJECTED,
+        self::STATUS_PUBLISHED,
+        self::STATUS_APPROVED,
+        self::STATUS_DECLINED_SYS,
+        self::STATUS_DECLINED_OWNER,
+        self::STATUS_DECLINED_EXECUTOR,
+    ];
 
     /**
      * @ORM\Id
@@ -22,31 +37,36 @@ class CargoRequest
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cargo::class, inversedBy="CargoRequest")
+     * @ORM\ManyToOne(targetEntity=Cargo::class, inversedBy="cargoRequest")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $cargo;
+//    #[Assert\NotBlank(message: 'The cargo should not be blank.')]
+    private ?Cargo $cargo;
 
     /**
      * @ORM\ManyToOne(targetEntity=Business::class, inversedBy="CargoRequests")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $executor;
+//    #[Assert\NotBlank(message: 'The executor should not be blank.')]
+    private ?Business $executor;
 
     /**
      * @ORM\Column(type="string", length=40, options={"default": self::STATUS_PUBLISHED})
      */
+    #[Assert\Choice (choices: self::STATUS_CHOICE, message: 'Not valid status')]
     private string $status = self::STATUS_PUBLISHED;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $price;
+    #[Assert\NotBlank (message: "The price should not be blank.")]
+    private ?int $price;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $weight;
+    #[Assert\NotBlank (message: "The weight should not be blank.")]
+    private ?int $weight;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -59,9 +79,13 @@ class CargoRequest
     private ?string $note = null;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": false})
+     * @ORM\Column(type="boolean")
      */
-    private $isEditable;
+    #[
+        Assert\NotNull (message: "The is vat should not be blank."),
+        Assert\Type(type: "bool")
+    ]
+    private ?bool $isEditable = false;
 
     public function getId(): ?int
     {

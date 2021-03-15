@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Cargo;
+use App\Entity\CargoRequest;
+use App\Form\CargoRequestType;
 use App\Form\CargoType;
 use App\Repository\CargoRepository;
 use App\Repository\CargoRequestRepository;
@@ -40,6 +42,7 @@ class CargoController extends AbstractController
             $entityManager->persist($cargo);
             $entityManager->flush();
 
+            // TODO: lost route
             return $this->redirectToRoute('cargo_search', ['id' => $this->getUser()->getCompany()->getId()]);
         }
 
@@ -76,10 +79,11 @@ class CargoController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(Cargo $cargo): Response
+    public function show(Cargo $cargo, CargoRequestRepository $cargoRequestRepository): Response
     {
         return $this->render('cargo/show.html.twig', [
             'cargo' => $cargo,
+            'my_request' => $cargoRequestRepository->getOneByBussiness($this->getUser()?->getCompany())
         ]);
     }
 
