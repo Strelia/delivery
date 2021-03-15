@@ -123,7 +123,54 @@
     {% if cargo.owner == app.user.company %}
         <a href="{{ path('cargo_edit', {'id': cargo.id}) }}">edit</a>
         {{ include('cargo/_delete_form.html.twig') }}
+        {{ include('cargo/_change_status_form.html.twig') }}
     {% else %}
-        <a href="{{ path('request_cargo_new', {'id': cargo.id}) }}">Create Request</a>
+        {% if (my_request) %}
+            <a href="{{ path('cargo_request_show', {'id': my_request.id}) }}">View Request</a>
+        {% elseif(cargo.status is constant('App\\Entity\\Cargo::STATUS_OPEN')) %}
+            <a href="{{ path('cargo_request_new', {'id': cargo.id}) }}">Send Request</a>
+        {% endif %}
+    {% endif %}
+    {% if (cargo.isHiddenUserRequest == false or cargo.owner == app.user.company) %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Executor</th>
+                <th>Price</th>
+                <th>Weight</th>
+                <th>Volume</th>
+                <th>Note</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for cargo_request in cargo.cargoRequest %}
+                <tr class="{% if (cargo_request == my_request) %}table-active{% endif %}">
+                    <td>{{ cargo_request.executor.name }}</td>
+                    <td>{{ cargo_request.price }}</td>
+                    <td>{{ cargo_request.weight }}</td>
+                    <td>{{ cargo_request.volume }}</td>
+                    <td>{{ cargo_request.note }}</td>
+                    <td>
+                        <a href="{{ path('cargo_request_show', {'id': cargo_request.id}) }}">show</a>
+                        {% if app.user.company %}
+                            {% for status in [
+                                constant('APP\\Entity\\CargoRequest::STATUS_APPROVED'),
+                                constant('APP\\Entity\\CargoRequest::STATUS_DECLINED_OWNER')
+                            ] %}
+                                {% set btnName = status %}
+                                {% set status = status %}
+                            {{ include('cargo_request/_change_status_form.html.twig') }}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 {% endblock %}

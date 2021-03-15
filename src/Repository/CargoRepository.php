@@ -24,32 +24,35 @@ class CargoRepository extends ServiceEntityRepository
         parent::__construct($registry, Cargo::class);
     }
 
-    public function getAllCargo(int $offset): QueryBuilder
+    public function getAllCargo(int $offset, ?array $statuses): QueryBuilder
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.status NOT IN  (:statuses)')
-            ->setParameter('statuses', [Cargo::STATUS_CLOSE])
-            ->setFirstResult($offset)
-            ;
+        $builder = $this->createQueryBuilder('c');
+
+        if ($statuses) {
+            $builder->andWhere('c.status NOT IN  (:statuses)')
+                ->setParameter('statuses', $statuses);
+        }
+        $builder->setFirstResult($offset);
+
+
+        return $builder;
     }
 
     public function getQueryBuildCargoByBusiness(Business $business, int $offset): QueryBuilder
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.owner = :business')
-            ->andWhere('c.status NOT IN  (:statuses)')
+            ->andWhere('c.status IN  (:statuses)')
             ->setParameter('business', $business)
-            ->setParameter('statuses', [Cargo::STATUS_CLOSE])
+            ->setParameter('statuses', [Cargo::STATUS_CLOSE, Cargo::STATUS_OPEN])
             ->setMaxResults(self::PAGINATOR_PER_PAGE)
-            ->setFirstResult($offset)
-            ;
+            ->setFirstResult($offset);
     }
 
     public function getPaginator(QueryBuilder $query): Paginator
     {
         $query
-            ->setMaxResults(self::PAGINATOR_PER_PAGE)
-        ;
+            ->setMaxResults(self::PAGINATOR_PER_PAGE);
         return new Paginator($query->getQuery());
     }
 

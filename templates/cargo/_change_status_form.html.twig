@@ -1,0 +1,10 @@
+{% if cargo.status is constant('App\\Entity\\Cargo::STATUS_OPEN') %}
+    {% set btnStatus = constant('App\\Entity\\Cargo::STATUS_CLOSE') %}
+{% elseif cargo.status is constant('App\\Entity\\Cargo::STATUS_CLOSE') %}
+    {% set btnStatus = constant('App\\Entity\\Cargo::STATUS_OPEN') %}
+{% endif %}
+<form method="post" action="{{ path('cargo_change_status', {'id': cargo.id}) }}">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('change_status' ~ cargo.id) }}">
+    <button class="btn btn-primary">Change To {{ btnStatus }}</button>
+</form>

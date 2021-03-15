@@ -38,7 +38,7 @@
                     <a title="show" class="btn btn-primary btn-sm" href="{{ path('cargo_show', {'id': cargo.id}) }}">
                         <i class="fas fa-eye"></i>
                     </a>
-                    {% if cargo.owner.id == app.user.company.id %}
+                    {% if app.user and app.user.company and cargo.owner.id == app.user.company.id %}
                     <a title="edit"  class="btn btn-success btn-sm" href="{{ path('cargo_edit', {'id': cargo.id}) }}">
                         <i class="fas fa-edit"></i>
                     </a>

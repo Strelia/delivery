@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('cargo_request_change_status', {'id': cargo_request.id}) }}">
+    <input type="hidden" name="_method" value="POST">
+    <input type="hidden" name="status" value="{{ status }}">
+    <input type="hidden" name="_token" value="{{ csrf_token('cargo_request' ~ cargo_request.id) }}">
+    <button class="btn btn-primary">{{ btnName }}</button>
+</form>

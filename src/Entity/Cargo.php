@@ -199,9 +199,7 @@ class Cargo extends Entity
     /**
      * @ORM\Column(type="integer")
      */
-    #[
-        Assert\NotBlank (message: "The price should not be blank.")
-    ]
+    #[Assert\NotBlank (message: "The price should not be blank.")]
     private ?int $price;
 
     /**
@@ -283,7 +281,7 @@ class Cargo extends Entity
     /**
      * @ORM\OneToMany(targetEntity=CargoRequest::class, mappedBy="cargo")
      */
-    private ArrayCollection|PersistentCollection $CargoRequest;
+    private ArrayCollection|PersistentCollection $cargoRequest;
 
     public function __construct()
     {
@@ -291,7 +289,7 @@ class Cargo extends Entity
         $this->loadingKinds = new ArrayCollection();
         $this->unloadingKinds = new ArrayCollection();
 
-        $this->CargoRequest = new ArrayCollection();
+        $this->cargoRequest = new ArrayCollection();
 
         $this->setStatus(self::STATUS_OPEN);
     }
@@ -702,13 +700,13 @@ class Cargo extends Entity
      */
     public function getCargoRequest(): Collection
     {
-        return $this->CargoRequest;
+        return $this->cargoRequest;
     }
 
     public function addCargoRequest(CargoRequest $CargoRequest): self
     {
-        if (!$this->CargoRequest->contains($CargoRequest)) {
-            $this->CargoRequest[] = $CargoRequest;
+        if (!$this->cargoRequest->contains($CargoRequest)) {
+            $this->cargoRequest[] = $CargoRequest;
             $CargoRequest->setCargo($this);
         }
 
@@ -717,7 +715,7 @@ class Cargo extends Entity
 
     public function removeCargoRequest(CargoRequest $CargoRequest): self
     {
-        if ($this->CargoRequest->removeElement($CargoRequest)) {
+        if ($this->cargoRequest->removeElement($CargoRequest)) {
             // set the owning side to null (unless already changed)
             if ($CargoRequest->getCargo() === $this) {
                 $CargoRequest->setCargo(null);

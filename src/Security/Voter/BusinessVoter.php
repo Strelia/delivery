@@ -29,7 +29,7 @@ class BusinessVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!$user instanceof UserInterface && !$user instanceof User || empty($user?->getCompany())) {
+        if (!$user instanceof UserInterface && !$user instanceof User) {
             return false;
         }
 
