@@ -1,0 +1,2 @@
+imports:
+    - { resource: ../workflows/cargo_request.yaml }

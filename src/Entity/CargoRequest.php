@@ -11,8 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CargoRequest
 {
-    const STATUS_PUBLISHED = 'published';
-    const STATUS_REJECTED = 'rejected';
+
     const STATUS_SUBMITTED = 'submitted';
     const STATUS_APPROVED = 'approved';
     const STATUS_DECLINED_SYS = 'decline_sys';
@@ -21,8 +20,6 @@ class CargoRequest
 
     const STATUS_CHOICE = [
         self::STATUS_SUBMITTED,
-        self::STATUS_REJECTED,
-        self::STATUS_PUBLISHED,
         self::STATUS_APPROVED,
         self::STATUS_DECLINED_SYS,
         self::STATUS_DECLINED_OWNER,
@@ -51,10 +48,11 @@ class CargoRequest
     private ?Business $executor;
 
     /**
-     * @ORM\Column(type="string", length=40, options={"default": self::STATUS_PUBLISHED})
+     * @ORM\Column(type="jsonb")
      */
-    #[Assert\Choice (choices: self::STATUS_CHOICE, message: 'Not valid status')]
-    private string $status = self::STATUS_PUBLISHED;
+    #[Assert\NotBlank(message: "The status should not be blank.")]
+    #[Assert\Choice (choices: self::STATUS_CHOICE, multiple: true, message: 'Not valid status')]
+    private array $status = [];
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -71,7 +69,7 @@ class CargoRequest
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $volume;
+    private ?int $volume;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -116,15 +114,25 @@ class CargoRequest
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?array
     {
-        return $this->status;
+        $status = $this->status;
+        return array_unique($status);
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(array $status): self
     {
         $this->status = $status;
 
+        return $this;
+    }
+
+    public function addStatus(string $status): self
+    {
+        $status = strtolower($status);
+        if (!in_array($status, $this->status, true)) {
+            $this->status[] = $status;
+        }
         return $this;
     }
 

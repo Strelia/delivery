@@ -11,7 +11,9 @@ use Faker;
 
 class CargoFixture extends Fixture implements DependentFixtureInterface
 {
-    const REF_CARGO = 'REF_CARGO_';
+    const REF_CARGO_OPEN = 'REF_CARGO_OPEN';
+    const REF_CARGO_CLOSE = 'REF_CARGO_CLOSE';
+    const REF_CARGO_HIDE = 'REF_CARGO_HIDE';
     protected string $dateFormat = 'y-m-d';
 
     public function load(ObjectManager $manager)
@@ -51,6 +53,10 @@ class CargoFixture extends Fixture implements DependentFixtureInterface
         $manager->persist($cargoHideUser);
         $manager->persist($cargoOpen);
         $manager->persist($cargoClose);
+
+        $this->addReference(self::REF_CARGO_OPEN, $cargoOpen);
+        $this->addReference(self::REF_CARGO_CLOSE, $cargoClose);
+        $this->addReference(self::REF_CARGO_HIDE, $cargoHideUser);
 
         $manager->flush();
     }

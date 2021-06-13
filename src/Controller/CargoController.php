@@ -81,6 +81,7 @@ class CargoController extends AbstractController
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Cargo $cargo, CargoRequestRepository $cargoRequestRepository): Response
     {
+        dd('ddd');
         return $this->render('cargo/show.html.twig', [
             'cargo' => $cargo,
             'my_request' => $cargoRequestRepository->getOneByBussiness($this->getUser()?->getCompany())

@@ -25,6 +25,7 @@ class BusinessFixture extends Fixture implements DependentFixtureInterface
         foreach (range(1, 5) as $i) {
             $businessCargo->addStaff($this->getReference(UserFixture::REF_USERS.$i));
         }
+        $businessCargo->addStaff($this->getReference(UserFixture::REF_USERS .'test'));
         $manager->persist($businessCargo);
         $this->addReference(self::REF_BUSINESS . self::CARGO, $businessCargo);
 

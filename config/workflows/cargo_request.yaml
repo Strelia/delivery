@@ -1,0 +1,43 @@
+framework:
+    workflows:
+        cargo_request:
+            audit_trail:
+                enabled: true
+            type: workflow # or 'state_machine'
+            supports:
+                - App\Entity\CargoRequest
+            marking_store:
+                type: method
+                property: status
+            initial_marking: submitted
+            places:
+                - submitted
+                - approved
+                - rejected_sys
+                - rejected_owner
+                - rejected_executor
+                - executed
+                - execution_confirmed
+                - execution_rejected
+            transitions:
+                submitted:
+                    from: submitted
+                    to: [ approved, rejected_sys, rejected_owner, rejected_executor ]
+                approved:
+                    from: approved
+                    to: [ rejected_owner, rejected_executor ]
+                rejected_sys:
+                    from: rejected_sys
+                    to: submitted
+                executed_executor:
+                    from: approved
+                    to: executed
+                    guard: 'executor'
+                execution_rejected:
+                    from: executed
+                    to: [execution_confirmed, execution_rejected]
+                    guard: 'owner'
+                close:
+                    from: approved
+                    to: execution_confirmed
+                    guard: 'owner'

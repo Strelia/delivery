@@ -187,7 +187,7 @@ class User extends Entity implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -209,13 +209,12 @@ class User extends Entity implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
     public function addRole(string $role): self
-    { $role = strtoupper($role);
-
+    {
+        $role = strtoupper($role);
         if (!in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
@@ -228,7 +227,7 @@ class User extends Entity implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -269,7 +268,7 @@ class User extends Entity implements UserInterface
      */
     public function eraseCredentials()
     {
-         $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function getEmail(): ?string
@@ -358,6 +357,6 @@ class User extends Entity implements UserInterface
 
     public function __toString(): string
     {
-        return sprintf('%s (%s %s)', $this->username , $this->surname, $this->name);
+        return sprintf('%s (%s %s)', $this->username, $this->surname, $this->name);
     }
 }

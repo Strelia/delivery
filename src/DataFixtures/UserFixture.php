@@ -45,6 +45,20 @@ class UserFixture extends Fixture
             $this->addReference(self::REF_USERS . $i, $user);
         }
 
+        // Test User
+        $user = new User();;
+        $user->setUsername('test');
+        $user->setName('User');
+        $user->setSurname('Test');
+        $user->setEmail('test@dilivery.com');
+        $user->setPlainPassword('test');
+        $user->setStatus(User::STATUS_VERIFIED);
+        $user->setIsVerified(true);
+        $user->setPhone($faker->phoneNumber);
+        $user->setRoles([User::ROLE_USER]);
+        $manager->persist($user);
+        $this->addReference(self::REF_USERS .'test', $user);
+
         $manager->flush();
     }
 }
