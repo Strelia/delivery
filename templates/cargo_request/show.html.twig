@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{ cargo_request.status }}</td>
+                <td>{{ cargo_request.status|join('|') }}</td>
             </tr>
             <tr>
                 <th>Price</th>

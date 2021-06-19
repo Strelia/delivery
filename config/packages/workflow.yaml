@@ -1,2 +1,30 @@
 imports:
     - { resource: ../workflows/cargo_request.yaml }
+#
+#framework:
+#    workflows:
+#        blog_publishing:
+#            type: workflow
+#            audit_trail:
+#                enabled: "%kernel.debug%"
+#            marking_store:
+#                type: method
+#                property: state
+#            supports:
+#                - App\Entity\CargoRequest
+#            initial_marking: submitted
+#            places:
+#                - submitted
+#                - reviewed
+#                - rejected
+#                - published
+#            transitions:
+#                to_review:
+#                    from: submitted
+#                    to:   reviewed
+#                publish:
+#                    from: reviewed
+#                    to:   published
+#                reject:
+#                    from: reviewed
+#                    to:   rejected

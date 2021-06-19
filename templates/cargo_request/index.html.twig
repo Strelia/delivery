@@ -20,7 +20,7 @@
         <tbody>
         {% for cargo_request in cargo_requests %}
             <tr>
-                <td>{{ cargo_request.status }}</td>
+                <td>{{ cargo_request.status|join('|') }}</td>
                 <td>{{ cargo_request.price }}</td>
                 <td>{{ cargo_request.weight }}</td>
                 <td>{{ cargo_request.volume }}</td>

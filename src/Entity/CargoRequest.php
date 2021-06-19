@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CargoRequestRepository;
+use App\Workflow\CargoRequestTransitions;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -11,21 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class CargoRequest
 {
-
-    const STATUS_SUBMITTED = 'submitted';
-    const STATUS_APPROVED = 'approved';
-    const STATUS_DECLINED_SYS = 'decline_sys';
-    const STATUS_DECLINED_OWNER = 'decline_owner';
-    const STATUS_DECLINED_EXECUTOR = 'decline_executor';
-
-    const STATUS_CHOICE = [
-        self::STATUS_SUBMITTED,
-        self::STATUS_APPROVED,
-        self::STATUS_DECLINED_SYS,
-        self::STATUS_DECLINED_OWNER,
-        self::STATUS_DECLINED_EXECUTOR,
-    ];
-
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -51,8 +37,8 @@ class CargoRequest
      * @ORM\Column(type="jsonb")
      */
     #[Assert\NotBlank(message: "The status should not be blank.")]
-    #[Assert\Choice (choices: self::STATUS_CHOICE, multiple: true, message: 'Not valid status')]
-    private array $status = [];
+    #[Assert\Choice (choices: CargoRequestTransitions::STATUS_CHOICE, message: 'Not valid status')]
+    private string $status;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -114,25 +100,15 @@ class CargoRequest
         return $this;
     }
 
-    public function getStatus(): ?array
+    public function getStatus(): ?string
     {
-        $status = $this->status;
-        return array_unique($status);
+        return $this->status;
     }
 
-    public function setStatus(array $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 
-        return $this;
-    }
-
-    public function addStatus(string $status): self
-    {
-        $status = strtolower($status);
-        if (!in_array($status, $this->status, true)) {
-            $this->status[] = $status;
-        }
         return $this;
     }
 
