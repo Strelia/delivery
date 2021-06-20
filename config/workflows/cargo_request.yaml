@@ -1,6 +1,58 @@
 framework:
     workflows:
         cargo_request:
+            type: state_machine # or workflow state_machine
+            supports:
+                - App\Entity\CargoRequest
+            marking_store:
+                type: method
+                property: status
+            initial_marking: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+            places:
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_REJECTED_EXECUTION
+                - !php/const App\Workflow\CargoRequestTransitions::STATUS_CONFIRMED_FULFILLMENT
+            transitions:
+                approved_executor:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_OWNER
+                decline_executor:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_OWNER
+                change_deviation_executor:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                change_approval_executor:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_OWNER
+                completion_confirmation:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_EXECUTOR
+                rejected_execution:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_REJECTED_EXECUTION
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_OWNER
+                confirmed_execution:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_CONFIRMED_FULFILLMENT
+                    guard: !php/const App\Workflow\CargoRequestTransitions::IS_OWNER
+                lock:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
+                    guard: 'false'
+                unlock:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                    guard: 'false'
+        cargo_request_sys:
 #            audit_trail:
 #                enabled: true
             type: state_machine # or workflow state_machine
@@ -9,38 +61,14 @@ framework:
             marking_store:
                 type: method
                 property: status
-            initial_marking: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+            initial_marking: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
             places:
                 - !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
                 - !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_EXECUTOR
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_EXECUTED_CONFIRMATION
-                - !php/const App\Workflow\CargoRequestTransitions::STATUS_REJECTED_EXECUTION
             transitions:
-                test:
-                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
+                lock:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
+                    to: !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
+                unlock:
+                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST
                     to: !php/const App\Workflow\CargoRequestTransitions::STATUS_SUBMITTED
-#                submitted:
-#                    from: submitted
-#                    to: [ !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED, !php/const App\Workflow\CargoRequestTransitions::STATUS_REJECTED_EXECUTION ]
-#                approved:
-#                    from: !php/const App\Workflow\CargoRequestTransitions::STATUS_APPROVED
-#                    to: [!php/const App\Workflow\CargoRequestTransitions::STATUS_LOCK_CARGO_REQUEST, !php/const App\Workflow\CargoRequestTransitions::STATUS_DECLINED_OWNER]
-#                rejected_sys:
-#                    from: rejected_sys
-#                    to:
-#                executed_executor:
-#                    from: approved
-#                    to: executed
-#                    guard: 'executor'
-#                execution_rejected:
-#                    from: executed
-#                    to: [execution_confirmed, execution_rejected]
-#                    guard: 'owner'
-#                close:
-#                    from: approved
-#                    to: execution_confirmed
-#                    guard: 'owner'

@@ -9,6 +9,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Cargo</th>
                 <th>Status</th>
                 <th>Price</th>
                 <th>Weight</th>
@@ -20,6 +21,11 @@
         <tbody>
         {% for cargo_request in cargo_requests %}
             <tr>
+                <td>
+                    <a href="{{ path('cargo_index', {'id': cargo_request.cargo.id}) }}">
+                        {{ cargo_request.cargo.name}}
+                    </a>
+                </td>
                 <td>{{ cargo_request.status|join('|') }}</td>
                 <td>{{ cargo_request.price }}</td>
                 <td>{{ cargo_request.weight }}</td>

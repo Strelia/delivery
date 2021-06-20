@@ -36,7 +36,7 @@ class CargoRequestController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, CargoRequest $cargoRequest): Response
+    public function edit(Request $request, CargoRequest $cargoRequest, Registry $workflows): Response
     {
         $this->denyAccessUnlessGranted(CargoRequestVoter::EDIT, $cargoRequest);
         $form = $this->createForm(CargoRequestType::class, $cargoRequest);
@@ -48,9 +48,13 @@ class CargoRequestController extends AbstractController
             return $this->redirectToRoute('cargo_show', ['id:' => $cargoRequest->getCargo()->getId()]);
         }
 
+        $workflow = $workflows->get($cargoRequest, 'cargo_request');
+        $trs = $workflow->getEnabledTransitions($cargoRequest);
+
+
         return $this->render('cargo_request/edit.html.twig', [
             'cargo_request' => $cargoRequest,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 
@@ -66,37 +70,22 @@ class CargoRequestController extends AbstractController
         return $this->redirectToRoute('cargo_request_index');
     }
 
-    #[Route('/{id}/status', name: 'change_status', methods: ['GET'])]
-    public function changeStatus(Request $request, Registry $workflows): Response
+    #[Route('/{id}/status/{status}', name: 'change_status', methods: ['GET'])]
+    public function changeStatus(string $status, Request $request, CargoRequest $cargoRequest, Registry $workflows): Response
     {
-        $cargoRequest = new CargoRequest();
-        $cargoRequest->setStatus(CargoRequestTransitions::STATUS_APPROVED);
+        $workflow = $workflows->get($cargoRequest, 'cargo_request');
 
-        $workflow = $workflows->get($cargoRequest);
-        $workflow->getEnabledTransitions($cargoRequest);
-//        dump($trs);
-
-        $ff = $workflow->can($cargoRequest, 'test');
-        echo $ff;
-        exit();
-//        dd($workflow->getEnabledTransitions($cargoRequest));
-//        try {
-////            $workflow->can($cargoRequest, 'execution_confirmed');
-////            $test = $workflow->apply($cargoRequest, 'approved');
-//        } catch (LogicException $exception) {
-//            dd($exception->getMessage());
-////            $this->addFlash('error', $exception->getMessage());
-//        }
-//
-//        dd('fff');
-
-//        if ($this->isCsrfTokenValid('cargo_request'.$cargoRequest->getId(), $request->request->get('_token'))) {
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $cargoRequest->setStatus($request->request->get('status'));
-//            $entityManager->persist($cargoRequest);
-//            $entityManager->flush();
-//        }
-
-//        return $this->redirectToRoute('cargo_show', ['id' => $cargoRequest->getCargo()->getId()]);
+//        $can = $workflow->can($cargoRequest, $status);
+        try {
+            $workflow->apply($cargoRequest, $status);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($cargoRequest);
+            $entityManager->flush();
+            $this->addFlash('cargo_request_change_status', 'Success');
+            return $this->redirectToRoute('cargo_request_index');
+        } catch (LogicException $exception) {
+            $this->addFlash('cargo_request_change_status', $exception->getReason());
+            return $this->redirectToRoute('cargo_request_index');
+        }
     }
 }

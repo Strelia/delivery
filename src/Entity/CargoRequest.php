@@ -34,7 +34,7 @@ class CargoRequest
     private ?Business $executor;
 
     /**
-     * @ORM\Column(type="jsonb")
+     * @ORM\Column(type="string")
      */
     #[Assert\NotBlank(message: "The status should not be blank.")]
     #[Assert\Choice (choices: CargoRequestTransitions::STATUS_CHOICE, message: 'Not valid status')]

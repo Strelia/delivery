@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Cargo;
 use App\Entity\CargoRequest;
+use App\Workflow\CargoRequestTransitions;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -21,7 +22,7 @@ class CargoRequestFixture extends Fixture implements DependentFixtureInterface
         $cargoRequest->setCargo($cargo);
         $cargoRequest->setPrice($cargo->getPrice());
         $cargoRequest->setIsEditable(false);
-        $cargoRequest->addStatus(CargoRequest::STATUS_APPROVED);
+        $cargoRequest->setStatus(CargoRequestTransitions::STATUS_SUBMITTED);
         $cargoRequest->setVolume($cargo->getVolume());
         $cargoRequest->setWeight($cargo->getWeight());
 

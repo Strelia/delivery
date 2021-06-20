@@ -57,27 +57,16 @@ class CargoRequestWorkflowSubscriber implements EventSubscriberInterface
 
     public function onWorkflowCargoRequestGuard(GuardEvent $event)
     {
-//        $event->setBlocked(true, 'This blog post cannot be marked as reviewed because it has no title.');
         /**
          * @var CargoRequest $cargoReq
          */
         $cargoReq = $event->getSubject();
-
-//        dd($event);
-    }
-
-
-    public function onWorkflowCargoRequest(Event $event) {
-//        dd($event);
+        $event->setBlocked(true, 'You can\'t changed status of the request' );
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-//            'workflow.cargo_request.enter' => 'onWorkflowCargoRequestEnter',
-//            'workflow.cargo_request.leave' => 'onWorkflowCargoRequestLeave',
-//            'workflow.cargo_request.transition' => 'onWorkflowCargoRequestTransition',
-            'workflow.cargo_request' => 'onWorkflowCargoRequest',
             'workflow.cargo_request.guard' => 'onWorkflowCargoRequestGuard'
         ];
     }

@@ -154,13 +154,8 @@
                     <td>
                         <a href="{{ path('cargo_request_show', {'id': cargo_request.id}) }}">show</a>
                         {% if app.user.company %}
-                            {% for status in [
-                                constant('APP\\Entity\\CargoRequest::STATUS_APPROVED'),
-                                constant('APP\\Entity\\CargoRequest::STATUS_DECLINED_OWNER')
-                            ] %}
-                                {% set btnName = status %}
-                                {% set status = status %}
-                            {{ include('cargo_request/_change_status_form.html.twig') }}
+                            {% for transition in workflow_transitions(cargo_request, 'cargo_request') %}
+                                <a href="{{ path('cargo_request_change_status', {'id': cargo_request.id, 'status': transition.name}) }}">{{ transition.name }}</a>
                             {% endfor %}
                         {% endif %}
                     </td>
